@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" id="main_page">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+<title>Amodcs</title>
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-social.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="starter-template.css" rel="stylesheet">
+<link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+
+</head>
+<div style="width:100%;padding-bottom: 25%; background:url('images/background.jpg');
+       background-size: cover;">
+
+<body>
+<header class= "navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" href="http://www.amdocs.com/pages/homepage.aspx">Amdocs</a>
+      </div>
+      <nav class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+    <li class="">
+      <a href="/feedback/"><span class="fa fa-fw fa-comment"></span> Feedback</a>
+    </li>
+    <li>
+      <a target="gae-init-docs"> <i class="fa fa-fw fa-phone"></i> Contact</a>
+    </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+    <li class="active">
+      <a href="login.html"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
+    </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+    <div class="container">
+      <div id="notifications"></div>
+        <div class="page-header">
+          <h1>Sign in </h1>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+<form method="POST" action="." novalidate>
+
+<div class="form-group ">
+<label class="control-label" for="email">Email</label>
+
+<input autofocus class="form-control input-lg" id="email" name="email" type="email" value="">
+
+
+</div>
+<div class="form-group ">
+<label class="control-label" for="password">Password</label>
+
+<div class="input-group input-group-lg">
+  <input autocomplete="off" class="form-control" id="password" name="password" type="password" value="">
+  <span class="input-group-btn">
+    <button class="btn btn-default btn-password-show" type="button" data-target="#password" data-toggle="button" title="Show/Hide Password" tabindex="-1">
+      <span class="fa fa-eye"></span>
+    </button>
+  </span>
+</div>
+</div>
+<div class="control">
+  <a class="btn btn-block btn-primary" href="uwUIkY.html">
+    Sign in
+  </a>
+</div>
+
+</form>
+ <legend class="text-muted text-center">or</legend>
+<div class="controls">
+
+<a class="btn btn-block btn-social btn-twitter">
+    <span class="fa fa-twitter"></span> Sign in with Twitter
+  </a>
+  <a class="btn btn-block btn-social btn-facebook">
+      <span class="fa fa-facebook"></span> Sign in with Facebook
+    </a>
+
+</div>
+
+</div><!-- /.container -->
+
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/fblogin.js"></script>
+
+<!-- facebook log in script------>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '249326552099211',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+</body>
+  </div>
+</html>
