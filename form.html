@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-Frame-Options" content="allow">
+
+    <link rel="stylesheet" type="text/css" herf="css/form.css">
+    <iframe id="my_typeform" src="http://www.yahoo.com/" width="100%" height="100%" frameborder="0"></iframe>
+  </head>
+<script>document.getElementById("my_typeform").contentWindow.focus()</script>
+</html>
+<!-- Enter to jump to next textfield function 
+var currentBoxNumber = 0;
+$(".username").keyup(function (event) {
+    if (event.keyCode == 13) {
+        textboxes = $("input.username");
+        currentBoxNumber = textboxes.index(this);
+        console.log(textboxes.index(this));
+        if (textboxes[currentBoxNumber + 1] != null) {
+            nextBox = textboxes[currentBoxNumber + 1];
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+});
+-->
