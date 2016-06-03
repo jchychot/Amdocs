@@ -21,17 +21,26 @@ body {
 #section3 {
   padding-top:50px;height:500px;color: #fff; background-color: #ff9800;
 }
+.row {
+    padding-top:10px;
+}
+input[type="text"]{
+  color: #fff; background-color: #1E88E5;
+}
 
 </style>
     <link herf="css/form.css" rel="stylesheet" type="text/css">
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link herf="css/form.css" rel="stylesheet" type="text/css">
+
     <script href="js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="js/form.js"></script>
+        <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
     <!-- Fonts -->
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+  <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
   </head>
 
   <body id="page-top" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -68,7 +77,19 @@ body {
 <form>
   <fieldset class="form-group">
     <label for="usr">Subject</label>
-     <input type="text" class="form-control" id="exampleInputEmail1">
+     <input type="text" class="form-control" id="exampleInputEmail1" style="background-color: #1E88E5">
+     <label for="comment">Detailed Desciption of Change</label>
+     <textarea class="form-control" rows"3" id="comment" style="background-color: #1E88E5;color: #fff"></textarea>
+
+     <div class="row">
+         <div class='col-sm-3'>
+     <label for="sel1">Start Time Requested</label>
+     <input type="text" class="cal" id="date1">
+     <label for="sel1">End Time Requested</label>
+     <input type="text" class="cal" id="date2">
+</div>
+
+</div>
        </fieldset>
 </form>
     </div>
@@ -101,6 +122,9 @@ $(".form-control").keyup(function (event) {
             return false;
         }
     }
+});
+$(function () {
+    $('.cal').datetimepicker();
 });
 </script>
   </body>
