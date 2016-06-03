@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta charset="utf-8">
@@ -8,12 +8,27 @@
     <meta name="author" content="">
 
     <title>RFC form</title>
+<style>
+body {
+    position: relative;
+}
+#section1 {
+  padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;
+}
+#section2 {
+  padding-top:50px;height:500px;color: #fff; background-color: #673ab7;
+}
+#section3 {
+  padding-top:50px;height:500px;color: #fff; background-color: #ff9800;
+}
 
-    <link rel="stylesheet" type="text/css" herf="css/form.css">
+</style>
+    <link herf="css/form.css" rel="stylesheet" type="text/css">
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link herf="css/form.css" rel="stylesheet" type="text/css">
     <script href="js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
+    <script src="js/form.js"></script>
     <!-- Fonts -->
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -50,20 +65,44 @@
 
     <div id="section1" class="container-fluid">
       <h1>Change Overview</h1>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+<form>
+  <fieldset class="form-group">
+    <label for="usr">Subject</label>
+     <input type="text" class="form-control" id="exampleInputEmail1">
+       </fieldset>
+</form>
     </div>
     <div id="section2" class="container-fluid">
       <h1>System Impact</h1>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+      <fieldset class="form-group">
+        <label for="comment">Detailed Desciption of Change</label>
+        <textarea class="form-control" rows"3" id="comment"></textarea>
+      </fieldset>
+
     </div>
     <div id="section3" class="container-fluid">
       <h1>Related Impact</h1>
       <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
       <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
     </div>
+<script>
 
+var currentBoxNumber = 0;
+$(".form-control").keyup(function (event) {
+    if (event.keyCode == 13) {
+        textboxes = $(".form-control");
+        currentBoxNumber = textboxes.index(this);
+        console.log(textboxes.index(this));
+        if (textboxes[currentBoxNumber + 1] != null) {
+            nextBox = textboxes[currentBoxNumber + 1];
+            nextBox.focus();
+            nextBox.select();
+            event.preventDefault();
+            return false;
+        }
+    }
+});
+</script>
   </body>
 </html>
 
