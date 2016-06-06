@@ -18,5 +18,8 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 // routes for api
+require('./app/routes.js')(app);
 
 //listen
+app.listen(port);
+console.log("App listening on port" + port);
