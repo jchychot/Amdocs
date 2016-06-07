@@ -1,19 +1,19 @@
 angular.module('rfcController',[])
 
-.controller('mainController', ['$scope', '$http', 'RFC', function($scope, $http,RFC){
+.controller('mainController', ['$scope', '$http', 'RFC_factory', function($scope, $http,RFC_factory){
   $scope.request = {};
-  $scope.stage = "";
   // create entry
   $scope.createRFC = function(){
 
       if($scope.request.text != undefined){
 
-          RFC.create($scope.request)
-          .then(function(data){
+        RFC_factory.create($scope.request)
+          .success(function(data){
+
               $scope.request = {};
-              $scope.stage = "submitted";
-              $scope.rfc = data;
+    
           });
+
 
       }
   };

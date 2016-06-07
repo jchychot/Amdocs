@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="RFC">
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,11 @@
     <meta name="author" content="">
 
     <title>RFC form</title>
+    <!-- Fonts -->
+    <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+    <link href="css/bootstrap.min.css" rel="styleshe  et" type="text/css">
+    <link herf="css/form.css" rel="stylesheet" type="text/css">
 <style>
 body {
     position: relative;
@@ -28,22 +33,23 @@ input[type="text"]{
 }
 
 </style>
-    <link herf="css/form.css" rel="stylesheet" type="text/css">
 
     <script href="js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
-  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
     <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
 <!-- Back-end scrpt-->
+
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
-<script scr="public/js/controllers/main.js"></script>
+<script src="/bower_components/angular-route/angular-route.js"></script>
+
 <script scr="public/js/services/factory.js"></script>
+<script scr="public/js/controllers/main.js"></script>
 <script src="public/js/core.js"></script>
-    <!-- Fonts -->
-    <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script>angular.bootstrap(document, ['rfcapp']);</script>
+
+
 
   </head>
 
@@ -81,7 +87,7 @@ input[type="text"]{
 <form>
   <fieldset class="form-group">
     <label for="usr">Subject</label>
-     <input type="text" class="form-control" id="exampleInputEmail1" style="background-color: #1E88E5">
+     <input type="text" class="form-control" id="exampleInputEmail1" style="background-color: #1E88E5" ng-model="request.subject">
      <label for="comment">Detailed Desciption of Change</label>
      <textarea class="form-control" rows"3" id="comment" style="background-color: #1E88E5;color: #fff"></textarea>
 

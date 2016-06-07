@@ -1,1 +1,1 @@
-angular.module('RFC',['rfcController', 'rfcService']); 
+angular.module('rfcapp',['rfcController','rfcService','ngRoute']);

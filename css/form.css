@@ -10,3 +10,9 @@ body {
 #section3 {
   padding-top:50px;height:500px;color: #fff; background-color: #ff9800;
 }
+.row {
+    padding-top:10px;
+}
+input[type="text"]{
+  color: #fff; background-color: #1E88E5;
+}
