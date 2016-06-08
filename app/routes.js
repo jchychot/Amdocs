@@ -2,16 +2,26 @@ var rfc = require('./model/rfc');
 
 module.exports = function(app){
 
+  app.get('/api/rfc', function(req,res){
+      rfc.find(function(err,rfc){
+          if(err){
+            res.send(err);
+          }
+        res.json(rfc);
+      });
+
+
+  });
+
   //create entry
   app.post('/api/rfc', function(req,res){
 
       rfc.create({
-          subject: req.body.text,
+          text: req.body.text,
           done: false
       }, function(err, rfc){
           if(err)
             res.send(err);
-            console.log("request summited");
       });
 
   });
@@ -25,5 +35,5 @@ module.exports = function(app){
 
 
 
-  
+
 };

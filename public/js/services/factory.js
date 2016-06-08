@@ -1,4 +1,4 @@
-angular.module('rfcService', [])
+angular.module('rfcService', [''])
 
 .factory('RFC_factory', ['$http', function($http){
 return{
