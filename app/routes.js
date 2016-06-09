@@ -7,6 +7,7 @@ module.exports = function(app){
           if(err){
             res.send(err);
           }
+
         res.json(rfc);
       });
 
@@ -15,10 +16,12 @@ module.exports = function(app){
 
   //create entry
   app.post('/api/rfc', function(req,res){
-
       rfc.create({
-          text: req.body.text,
-          done: false
+          subject: req.body.subject,
+          descriptions: req.body.descriptions,
+          s_date: req.body.s_date,
+          e_date: req.body.e_date
+
       }, function(err, rfc){
           if(err)
             res.send(err);

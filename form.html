@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-  <head ng-app="rfcapp">
+<html ng-app="rfcapp">
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -8,32 +8,39 @@
 
     <title>RFC form</title>
     <!-- Fonts -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script href="js/bootstrap.min.js"></script>
-    <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-    <link herf="css/form.css" rel="stylesheet" type="text/css">
+    <link herf="css/form.css" rel="stylesheet" type="text/css" />
+
 <style>
 body {
     position: relative;
 }
 #section1 {
-  padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;
+  padding-top:60px;height:600px;color: #fff; background-color: #1E88E5;
 }
 #section2 {
-  padding-top:50px;height:500px;color: #fff; background-color: #673ab7;
+  padding-top:50px;height:920px;color: #fff; background-color: #66CC33;
 }
 #section3 {
-  padding-top:50px;height:500px;color: #fff; background-color: #ff9800;
+  padding-top:50px;height:480px;color: #fff; background-color: #ff9800;
 }
 .row {
     padding-top:10px;
 }
-input[type="text"]{
-  color: #fff; background-color: #1E88E5;
+#content {
+    position: relative;
 }
-
+#content img {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    height:100px;
+    width: 150px;
+}
 </style>
 
     <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
@@ -42,11 +49,8 @@ input[type="text"]{
 <!-- Back-end scrpt-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
-<script src="/bower_components/angular-route/angular-route.js"></script>
-
-<script scr="public/js/services/factory.js"></script>
-<script scr="public/js/controllers/main.js"></script>
-<script src="public/js/core.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script type="text/javascript" scr="public/js/core.js"></script>
 
   </head>
 
@@ -78,49 +82,155 @@ input[type="text"]{
         </div>
       </div>
     </nav>
-
+    <div id="content">
+    <img src="images/amdocs.png" class="ribbon"/>
+</div>
+<!-- section111111111111111111111111111111111111 -->
     <div id="section1" class="container-fluid">
       <h1>Change Overview</h1>
 <form>
   <fieldset class="form-group">
     <label for="usr">Subject</label>
-     <input type="text" class="form-control" id="exampleInputEmail1" style="background-color: #1E88E5" ng-model="request.text">
+     <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.subject">
      <label for="comment">Detailed Desciption of Change</label>
-     <textarea class="form-control" rows"3" id="comment" style="background-color: #1E88E5;color: #fff"></textarea>
+     <textarea class="form-control" rows"3" id="comment" ng-model="request.descriptions"></textarea>
 
      <div class="row">
          <div class='col-sm-3'>
      <label for="sel1">Start Time Requested</label>
-     <input type="text" class="cal" id="date1">
+     <input type="text" class="cal" id="date1" ng-model="request.s_date">
      <label for="sel1">End Time Requested</label>
-     <input type="text" class="cal" id="date2">
-</div>
+     <input type="text" class="cal" id="date2" ng-model="request.e_date">
+   </div>
 
-</div>
+   </div>
+   <div>
+     <label for="sel1">Impact</label>
+   </div>
+     <label class="radio-inline"><input type="radio" name="optradio">Low</label>
+     <label class="radio-inline"><input type="radio" name="optradio">Medium</label>
+     <label class="radio-inline"><input type="radio" name="optradio">High</label>
+     <div>
+     <label for="comment">Detailed Benefits</label>
+   </div>
+     <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.benefits">
+     <label for="comment">Detailed Risks</label>
+     <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.risks">
+    <div>
+       <label for="sel1">Is this change a result of a P1 Ticket/Escalated issue/Emergency?</label>
+     </div>
+     <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio">No</label>
+         <div>
+         <label for="sel1">Has Change been Previously Implemented? </label>
+       </div>
+       <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
+       <label class="radio-inline"><input type="radio" name="optradio">No</label>
        </fieldset>
 </form>
     </div>
+    <!-- section222222222222222222222222222222222222222222222 -->
     <div id="section2" class="container-fluid">
       <h1>System Impact</h1>
       <fieldset class="form-group">
-        <label for="comment">Detailed Desciption of Change</label>
-        <textarea class="form-control" rows"3" id="comment"></textarea>
+        <div>
+           <label for="sel1">Duration Required</label>
+         </div>
+         <label class="radio-inline"><input type="radio" name="optradio">Standard</label>
+         <label class="radio-inline"><input type="radio" name="optradio">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio">smth</label>
+         <div>
+            <label for="sel1">Category of Change</label>
+          </div>
+          <select multiple class="form-control">
+              <option value="1">Fix/Repair</option>
+  <option value="2">Two</option>
+  <option value="3">Three</option>
+</select>
+<div>
+   <label for="sel1">Host Names of Impacted Servers</label>
+ </div>
+ <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.host">
+ <div>
+    <label for="sel1">Environment</label>
+  </div>
+  <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.envir">
+  <div>
+     <label for="sel1">Network Element Affected (if any)</label>
+   </div>
+   <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.net">
+   <div>
+      <label for="sel1">Hardware or Software change?</label>
+    </div>
+    <label class="radio-inline"><input type="radio" name="optradio">Hardware</label>
+    <label class="radio-inline"><input type="radio" name="optradio">Software</label>
+    <div>
+    <label for="comment">Detailed Implementation Plan (please attach):</label>
+    </div>
+    <textarea class="form-control" rows"3" id="comment" ng-model="request.plan"></textarea>
+  <label for="comment">Detailed Back Out Plan (please attach):</label>
+  <textarea class="form-control" rows"3" id="comment" ng-model="request.plan2"></textarea>
+  <div>
+     <label for="sel1">Processes Impacted:?</label>
+   </div>
+   <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.pi">
+   <div>
+      <label for="sel1">Outage Required? </label>
+    </div>
+    <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
+    <label class="radio-inline"><input type="radio" name="optradio">No</label>
+    <div>
+       <label for="sel1">Testing Complete? </label>
+     </div>
+     <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio">No</label>
+     <div>
+        <label for="sel1">Responsible Team </label>
+      </div>
+      <select multiple class="form-control">
+<option value="1">IT OPS</option>
+<option value="2">Two</option>
+<option value="3">Three</option>
+</select>
       </fieldset>
-
+<!-- section333333333333333333333333333333333333333333333333 -->
     </div>
     <div id="section3" class="container-fluid">
+
       <h1>Related Impact</h1>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-      <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
-    </div>
+  <fieldset class="form-group">
+      <div>
+         <label for="sel1">Teams to Notify</label>
+       </div>
+       <select multiple class="form-control">
+ <option value="1">Self-Serve Users</option>
+ <option value="2">AT&T CSP</option>
+ <option value="3">IT OPS</option>
+ </select>
+ <div>
+    <label for="sel1">SLA Impact? </label>
+  </div>
+  <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
+  <label class="radio-inline"><input type="radio" name="optradio">No</label>
+ <div>
+    <label for="sel1">Event MR# (if any)</label>
+  </div>
+ <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.impact">
+ <div>
+    <label for="sel1">Vendor Ticket# (if this is a break fix) </label>
+  </div>
+  <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.ticket">
+
 
     <div id="todo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
-					<button type="submit" class="btn btn-primary btn-lg" data-ng-click="createRFC()">Submit</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createRFC()">Submit</button>
 				</form>
 			</div>
 		</div>
+  </fieldset>
+    </div>
 <script>
 
 var currentBoxNumber = 0;
@@ -141,7 +251,51 @@ $(".form-control").keyup(function (event) {
 $(function () {
     $('.cal').datetimepicker();
 });
+// Service
+angular.module('rfcService', [])
+
+.factory('RFC_factory', ['$http', function($http){
+return{
+  create : function(data){
+      return $http.post('/api/rfc', data);
+  },
+
+  get : function() {
+      return $http.get('/api/rfc');
+}
+}
+}]);
+
+// controller
+angular.module('rfcController',[])
+
+.controller('mainController', ['$scope', '$http','RFC_factory',  function($scope, $http, RFC_factory){
+$scope.request = {};
+
+  // create entry
+  $scope.createRFC = function(){
+		alert('hey this is called!');
+          if($scope.request.subject != undefined){
+
+var json = JSON.stringify($scope.request,null, 4);
+alert(json);
+        RFC_factory.create(json)
+          .success(function(data){
+
+              $scope.request = {};
+
+          });
+      }
+  };
+
+
+}]);
+// core
+angular.module('rfcapp', ['rfcController','rfcService','ngRoute']);
+
 </script>
+
+
   </body>
 </html>
 
