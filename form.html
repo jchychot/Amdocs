@@ -20,7 +20,7 @@ body {
     position: relative;
 }
 #section1 {
-  padding-top:60px;height:600px;color: #fff; background-color: #1E88E5;
+  padding-top:60px;height:500px;color: #fff; background-color: #1E88E5;
 }
 #section2 {
   padding-top:50px;height:920px;color: #fff; background-color: #66CC33;
@@ -40,6 +40,10 @@ body {
     right: 0px;
     height:100px;
     width: 150px;
+}
+.col-lg-4 {
+margin-top: 10px;
+
 }
 </style>
 
@@ -90,42 +94,80 @@ body {
       <h1>Change Overview</h1>
 <form>
   <fieldset class="form-group">
+    <div class="col-lg-4 col-lg-offset-1">
+
+    <div class="input-group">
     <label for="usr">Subject</label>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.subject">
+   </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="input-group">
      <label for="comment">Detailed Desciption of Change</label>
      <textarea class="form-control" rows"3" id="comment" ng-model="request.descriptions"></textarea>
+   </div>
+    </div>
 
-     <div class="row">
-         <div class='col-sm-3'>
+       <div class="col-lg-4 col-lg-offset-1">
+       <div class="input-group">
+         <div>
      <label for="sel1">Start Time Requested</label>
-     <input type="text" class="cal" id="date1" ng-model="request.s_date">
-     <label for="sel1">End Time Requested</label>
-     <input type="text" class="cal" id="date2" ng-model="request.e_date">
    </div>
+     <input type="text" class="cal" id="date1" ng-model="request.s_date">
+   </div>
+  </div>
+     <div class="col-lg-4">
+     <div class="input-group">
+       <div>
+     <label for="sel1">End Time Requested</label>
+   </div>
+     <input type="text" class="cal" id="date2" ng-model="request.e_date">
 
    </div>
+  </div>
+
+<div class="col-lg-4 col-lg-offset-1">
+<div class="input-group">
    <div>
      <label for="sel1">Impact</label>
    </div>
      <label class="radio-inline"><input type="radio" name="optradio">Low</label>
      <label class="radio-inline"><input type="radio" name="optradio">Medium</label>
      <label class="radio-inline"><input type="radio" name="optradio">High</label>
+        </div>
+           </div>
+           <div class="col-lg-4">
+           <div class="input-group">
      <div>
      <label for="comment">Detailed Benefits</label>
    </div>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.benefits">
+        </div>
+           </div>
+           <div class="col-lg-4 col-lg-offset-1">
+           <div class="input-group">
      <label for="comment">Detailed Risks</label>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.risks">
+   </div>
+      </div>
+      <div class="col-lg-4">
+      <div class="input-group">
     <div>
        <label for="sel1">Is this change a result of a P1 Ticket/Escalated issue/Emergency?</label>
      </div>
      <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
      <label class="radio-inline"><input type="radio" name="optradio">No</label>
+          </div>
+               </div>
+               <div class="col-lg-4">
+               <div class="input-group">
          <div>
          <label for="sel1">Has Change been Previously Implemented? </label>
        </div>
        <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
        <label class="radio-inline"><input type="radio" name="optradio">No</label>
+          </div>
+             </div>
        </fieldset>
 </form>
     </div>
