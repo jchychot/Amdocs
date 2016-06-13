@@ -15,18 +15,16 @@
 <!-- Custom styles for this template -->
 <link href="starter-template.css" rel="stylesheet">
 <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
-
+<script src="https://connect.facebook.net/en_US/all.js"></script>
 </head>
-<div style="width:100%;padding-bottom: 25%; background:url('images/background.jpg');
-       background-size: cover;">
+<div style="width:100%; padding-bottom: 25%; background:url('images/background.gif');
+       background-size: 1680px 1050px">
 <style>
 #notifications {
   padding-top:50px
 }
 #authens {
   padding-top:150px
-
-
 }
 </style>
 <body>
@@ -52,7 +50,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
     <li class="active">
-      <a href="login.html"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
+      <a id="loginBtn" href="login.html"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
     </li>
         </ul>
       </nav>
@@ -84,7 +82,7 @@
 </div>
 </div>
 <div class="control">
-  <a class="btn btn-block btn-primary" href="uwUIkY.html">
+  <a class="btn btn-block btn-primary" href="form.html">
     Sign in
   </a>
 </div>
@@ -96,10 +94,15 @@
 <a class="btn btn-block btn-social btn-twitter">
     <span class="fa fa-twitter"></span> Sign in with Twitter
   </a>
-  <a class="btn btn-block btn-social btn-facebook">
+  <a class="btn btn-block btn-social btn-facebook" onclick="logIn()">
       <span class="fa fa-facebook"></span> Sign in with Facebook
     </a>
-
+    <div
+      class="fb-like"
+      data-share="true"
+      data-width="450"
+      data-show-faces="true">
+    </div>
 </div>
 
 </div><!-- /.container -->
@@ -113,23 +116,71 @@
 
 <!-- facebook log in script------>
 <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '249326552099211',
-      xfbml      : true,
-      version    : 'v2.6'
-    });
-  };
+$( document ).ready(function() {
+  $('#logoutBtn').hide();
+  $('#userDetails').hide();
+ });
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+ function fbAsyncInit() {
+  FB.init({
+   appId      : '249326552099211',
+   status     : true, // check login status
+   cookie     : true, // enable cookies to allow the server to access the session
+   xfbml      : true  // parse XFBML
+  });
+ }
+ // JS SDK - this will be loaded asynchronously
+(function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+ function logIn() {
+    FB.login(
+         function(response) {
+    if (response.status== 'connected') {
+     FB.api('/me', function(response) {
+         console.log(response);
+           console.log('Good to see you, ' + response.name + '.');
+           $('#loginBtn').hide();
+           $('#logoutBtn').show();
+      $('#userDetails').show();
+      $('#userInfo').html(response.name + '' + response.location.name);
+        });
+
+        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
+           if (response && !response.error) {
+             /* handle the result */
+             console.log('PIC ::', response);
+             $('#userPic').attr('src', response.data.url);
+           }
+        });
+    }
+   }
+   ,{
+ scope: "email"
+     }
+  );
+ }
+
+ function logOut() {
+  FB.logout(function(response) {
+   console.log('logout :: ', response);
+   //Removing access token form localStorage.
+   $('#loginBtn').show();
+   $('#logoutBtn').hide();
+   $('#userDetails').hide();
+  });
+ }
+
+ fbAsyncInit();
 </script>
 
+<div id="status">
+</div>
 </body>
   </div>
 </html>

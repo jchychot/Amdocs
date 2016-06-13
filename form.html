@@ -14,7 +14,7 @@
     <link href="font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
     <link herf="css/form.css" rel="stylesheet" type="text/css" />
-
+    <link herf="css/datepicker.css" rel="stylesheet" type="text/css" />
 <style>
 body {
     position: relative;
@@ -45,6 +45,13 @@ body {
 margin-top: 10px;
 
 }
+.datepicker {
+  background-color: #fff;
+  color: #333;
+}
+.cal {
+  color: #333;
+}
 </style>
 
     <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
@@ -55,6 +62,7 @@ margin-top: 10px;
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script type="text/javascript" scr="public/js/core.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
 
   </head>
 
@@ -113,7 +121,7 @@ margin-top: 10px;
          <div>
      <label for="sel1">Start Time Requested</label>
    </div>
-     <input type="text" class="cal" id="date1" ng-model="request.s_date">
+     <input type="text" class="cal" id="date1" data-format="MM/DD/YYYY" ng-model="request.start_date">
    </div>
   </div>
      <div class="col-lg-4">
@@ -121,7 +129,7 @@ margin-top: 10px;
        <div>
      <label for="sel1">End Time Requested</label>
    </div>
-     <input type="text" class="cal" id="date2" ng-model="request.e_date">
+     <input type="text" class="cal" id="date2" data-format="MM/DD/YYYY" ng-model="request.end_date">
 
    </div>
   </div>
@@ -155,8 +163,8 @@ margin-top: 10px;
     <div>
        <label for="sel1">Is this change a result of a P1 Ticket/Escalated issue/Emergency?</label>
      </div>
-     <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-     <label class="radio-inline"><input type="radio" name="optradio">No</label>
+     <label class="radio-inline"><input type="radio" name="optradio1">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio1">No</label>
           </div>
                </div>
                <div class="col-lg-4">
@@ -164,8 +172,8 @@ margin-top: 10px;
          <div>
          <label for="sel1">Has Change been Previously Implemented? </label>
        </div>
-       <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-       <label class="radio-inline"><input type="radio" name="optradio">No</label>
+       <label class="radio-inline"><input type="radio" name="optradio2">Yes</label>
+       <label class="radio-inline"><input type="radio" name="optradio2">No</label>
           </div>
              </div>
        </fieldset>
@@ -178,9 +186,9 @@ margin-top: 10px;
         <div>
            <label for="sel1">Duration Required</label>
          </div>
-         <label class="radio-inline"><input type="radio" name="optradio">Standard</label>
-         <label class="radio-inline"><input type="radio" name="optradio">smth</label>
-         <label class="radio-inline"><input type="radio" name="optradio">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio3">Standard</label>
+         <label class="radio-inline"><input type="radio" name="optradio3">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio3">smth</label>
          <div>
             <label for="sel1">Category of Change</label>
           </div>
@@ -204,8 +212,8 @@ margin-top: 10px;
    <div>
       <label for="sel1">Hardware or Software change?</label>
     </div>
-    <label class="radio-inline"><input type="radio" name="optradio">Hardware</label>
-    <label class="radio-inline"><input type="radio" name="optradio">Software</label>
+    <label class="radio-inline"><input type="radio" name="optradio4">Hardware</label>
+    <label class="radio-inline"><input type="radio" name="optradio4">Software</label>
     <div>
     <label for="comment">Detailed Implementation Plan (please attach):</label>
     </div>
@@ -219,13 +227,13 @@ margin-top: 10px;
    <div>
       <label for="sel1">Outage Required? </label>
     </div>
-    <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-    <label class="radio-inline"><input type="radio" name="optradio">No</label>
+    <label class="radio-inline"><input type="radio" name="optradio5">Yes</label>
+    <label class="radio-inline"><input type="radio" name="optradio5">No</label>
     <div>
        <label for="sel1">Testing Complete? </label>
      </div>
-     <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-     <label class="radio-inline"><input type="radio" name="optradio">No</label>
+     <label class="radio-inline"><input type="radio" name="optradio6">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio6">No</label>
      <div>
         <label for="sel1">Responsible Team </label>
       </div>
@@ -252,8 +260,8 @@ margin-top: 10px;
  <div>
     <label for="sel1">SLA Impact? </label>
   </div>
-  <label class="radio-inline"><input type="radio" name="optradio">Yes</label>
-  <label class="radio-inline"><input type="radio" name="optradio">No</label>
+  <label class="radio-inline"><input type="radio" name="optradio7">Yes</label>
+  <label class="radio-inline"><input type="radio" name="optradio7">No</label>
  <div>
     <label for="sel1">Event MR# (if any)</label>
   </div>
@@ -290,9 +298,17 @@ $(".form-control").keyup(function (event) {
         }
     }
 });
+//date picker
 $(function () {
-    $('.cal').datetimepicker();
+    $('.cal').datetimepicker({
+      format: 'YYYY-MM-DD'
+    })
+    .on('changeDate', function(ev){
+    $(this).datepicker('hide');
 });
+});
+
+
 // Service
 angular.module('rfcService', [])
 

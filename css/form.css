@@ -2,17 +2,35 @@ body {
     position: relative;
 }
 #section1 {
-  padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;
+  padding-top:60px;height:500px;color: #fff; background-color: #1E88E5;
 }
 #section2 {
-  padding-top:50px;height:500px;color: #fff; background-color: #673ab7;
+  padding-top:50px;height:920px;color: #fff; background-color: #66CC33;
 }
 #section3 {
-  padding-top:50px;height:500px;color: #fff; background-color: #ff9800;
+  padding-top:50px;height:480px;color: #fff; background-color: #ff9800;
 }
 .row {
     padding-top:10px;
 }
-input[type="text"]{
-  color: #fff; background-color: #1E88E5;
+#content {
+    position: relative;
+}
+#content img {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    height:100px;
+    width: 150px;
+}
+.col-lg-4 {
+margin-top: 10px;
+
+}
+.datepicker {
+  background-color: #fff;
+  color: #333;
+}
+.cal {
+  color: #333;
 }

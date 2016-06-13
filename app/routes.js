@@ -18,8 +18,8 @@ module.exports = function(app){
       rfc.create({
           subject: req.body.subject,
           descriptions: req.body.descriptions,
-          s_date: req.body.s_date,
-          e_date: req.body.e_date
+          start_date: req.body.start_date,
+          end_date: req.body.end_date
 
       }, function(err, rfc){
           if(err)
@@ -31,7 +31,7 @@ module.exports = function(app){
   // application
   app.get('*', function(req, res){
       var path = require('path');
-      res.sendFile(path.resolve(__dirname + '/../form.html'));
+      res.sendFile(path.resolve(__dirname + '/../login.html'));
       console.log("static site sent");
   });
 
