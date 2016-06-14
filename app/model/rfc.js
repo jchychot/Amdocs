@@ -1,6 +1,14 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('rfc',{
+  name: {
+    type: String,
+    default: ''
+  },
+  email:{
+    type: String,
+    default: ''
+  },
   subject: {
       type: String,
       default: ''

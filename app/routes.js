@@ -19,8 +19,10 @@ module.exports = function(app){
           subject: req.body.subject,
           descriptions: req.body.descriptions,
           start_date: req.body.start_date,
-          end_date: req.body.end_date
-
+          end_date: req.body.end_date,
+          name: req.body.name,
+          email: req.body.email,
+          impact: req.body.impact
       }, function(err, rfc){
           if(err)
             res.send(err);
