@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="main_page">
+<html lang="en" id="main_page" ng-app="rfcapp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,6 +16,7 @@
 <link href="starter-template.css" rel="stylesheet">
 <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
 <script src="https://connect.facebook.net/en_US/all.js"></script>
+ <script src="js/oauth.js"></script>
 </head>
 <div style="width:100%; padding-bottom: 25%; background:url('images/background.gif');
        background-size: 1680px 1050px">
@@ -27,7 +28,10 @@
   padding-top:150px
 }
 </style>
-<body>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+<script scr="js/core.js"></script>
+<body ng-controller="mainController">
 <header class= "navbar navbar-inverse navbar-fixed-top">
   <div class="container">
       <div class="navbar-header">
@@ -97,7 +101,7 @@
 </div>
 
 </form>
- <legend class="text-muted text-center">or</legend>
+ <legend class="text-muted text-center" style="color:black">or</legend>
 <div class="controls">
 
 <a class="btn btn-block btn-social btn-twitter">

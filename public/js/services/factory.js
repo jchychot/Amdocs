@@ -8,6 +8,9 @@ return{
 
   get : function() {
       return $http.get('/api/rfc');
-}
+},
+  twitterLogin : function(url){
+      return $http.post(url);
+  }
 }
 }]);

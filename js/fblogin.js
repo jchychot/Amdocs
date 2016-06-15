@@ -63,15 +63,18 @@ var email = '';
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     $('#loginBtn').hide();
-      FB.api('/me', function(response) {
+      FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
       document.getElementById('username').innerHTML = response.name;
-//      alert(response.email);
+       alert(response.email);
+        email = response.email; 
+
        });
        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
           if (response && !response.error) {
             $('#pic').attr('src', response.data.url);
           }
        });
+
     // Logged into your app and Facebook.
 
   } else if (response.status === 'not_authorized') {

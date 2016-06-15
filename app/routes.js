@@ -9,8 +9,6 @@ module.exports = function(app){
           }
         res.json(rfc);
       });
-
-
   });
 
   //create entry
@@ -36,6 +34,7 @@ module.exports = function(app){
       res.sendFile(path.resolve(__dirname + '/../login.html'));
       console.log("static site sent");
   });
+
 
 
 

@@ -7,6 +7,7 @@ var database = require('./config/database');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+
 //configuration
 mongoose.connect(database.localUrl);
 app.set('json spaces', 4);
