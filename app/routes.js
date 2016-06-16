@@ -38,7 +38,9 @@ module.exports = function(app){
           test: req.body.test,
           SLA: req.body.SLA,
           event: req.body.mr,
-          ticket_num: req.body.ticket_num
+          ticket_num: req.body.ticket_num,
+          responsible_teams: req.body.rt,
+          notify_teams: req.body.nt
       }, function(err, rfc){
           if(err)
             res.send(err);

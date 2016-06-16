@@ -18,11 +18,11 @@ module.exports = mongoose.model('rfc',{
     default: ''
   },
   start_date: {
-    type: Date,
+    type: String,
     default: Date.now
   },
   end_date: {
-    type: Date,
+    type: String,
     default: Date.now
   },
   impact: {
@@ -49,7 +49,7 @@ module.exports = mongoose.model('rfc',{
     type: String,
     default: 'n/a'
   },
-  categories: [String],
+  categories: String,
   host_name: {
     type: String,
     default: 'n/a'
@@ -86,8 +86,8 @@ module.exports = mongoose.model('rfc',{
     type: String,
     default: 'n/a'
   },
-  res_team: [String],
-  notify: [String],
+  responsible_teams: String,
+  notify_teams: String,
   SLA: {
     type: String,
     default: 'n/a'

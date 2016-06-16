@@ -20,7 +20,7 @@ body {
     position: relative;
 }
 #section1 {
-  padding-top:60px;height:500px;color: #fff; background-color: #1E88E5;
+  padding-top:60px;height:670px;color: #fff; background-color: #1E88E5;
 }
 #section2 {
   padding-top:50px;height:920px;color: #fff; background-color: #66CC33;
@@ -112,21 +112,20 @@ margin-top: 10px;
       <h1>Change Overview</h1>
 <form>
   <fieldset class="form-group">
-    <div class="col-lg-4 col-lg-offset-1">
+    <div>
 
-    <div class="input-group">
     <label for="usr">Subject</label>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.subject">
-   </div>
+
     </div>
-    <div class="col-lg-4">
+    <div>
     <div class="input-group">
      <label for="comment">Detailed Desciption of Change</label>
      <textarea class="form-control" rows"3" id="comment" ng-model="request.descriptions"></textarea>
    </div>
     </div>
 
-       <div class="col-lg-4 col-lg-offset-1">
+       <div>
        <div class="input-group">
          <div>
      <label for="sel1">Start Time Requested</label>
@@ -134,7 +133,7 @@ margin-top: 10px;
      <input type="text" class="cal" id="date1" data-format="MM/DD/YYYY" ng-model="request.start_date">
    </div>
   </div>
-     <div class="col-lg-4">
+     <div>
      <div class="input-group">
        <div>
      <label for="sel1">End Time Requested</label>
@@ -144,7 +143,7 @@ margin-top: 10px;
    </div>
   </div>
 
-<div class="col-lg-4 col-lg-offset-1">
+<div>
 <div class="input-group">
    <div>
      <label for="sel1">Impact</label>
@@ -154,37 +153,37 @@ margin-top: 10px;
      <label class="radio-inline"><input type="radio" name="optradio" value="High">High</label>
         </div>
            </div>
-           <div class="col-lg-4">
-           <div class="input-group">
+
+
      <div>
      <label for="comment">Detailed Benefits</label>
    </div>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.benefits">
-        </div>
-           </div>
-           <div class="col-lg-4 col-lg-offset-1">
-           <div class="input-group">
+
+
+           <div>
+
      <label for="comment">Detailed Risks</label>
      <input type="text" class="form-control" id="exampleInputEmail1" ng-model="request.risks">
-   </div>
+
       </div>
-      <div class="col-lg-4">
-      <div class="input-group">
+      <div>
+
     <div>
        <label for="sel1">Is this change a result of a P1 Ticket/Escalated issue/Emergency?</label>
      </div>
      <label class="radio-inline"><input type="radio" name="optradio1" value="Yes">Yes</label>
      <label class="radio-inline"><input type="radio" name="optradio1" value="No">No</label>
-          </div>
+
                </div>
-               <div class="col-lg-4">
-               <div class="input-group">
+               <div>
+
          <div>
          <label for="sel1">Has Change been Previously Implemented? </label>
        </div>
        <label class="radio-inline"><input type="radio" name="optradio2" value="Yes">Yes</label>
        <label class="radio-inline"><input type="radio" name="optradio2" value="No">No</label>
-          </div>
+
              </div>
        </fieldset>
 </form>
@@ -196,9 +195,9 @@ margin-top: 10px;
         <div>
            <label for="sel1">Duration Required</label>
          </div>
-         <label class="radio-inline"><input type="radio" name="optradio3" value="Standard">Standard</label>
-         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">smth</label>
-         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio3" value="Standard">Short</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">Standard</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">Long</label>
          <div>
             <label for="sel1">Category of Change</label>
           </div>
@@ -383,7 +382,6 @@ RFC_factory.initialize();
 //RFC_factory.initialize();
   // create entry
   $scope.createRFC = function(){
-		alert($('#username').html());
 
   $scope.request.name= $('#username').html();
   $scope.request.email = email;
@@ -395,10 +393,13 @@ RFC_factory.initialize();
   $scope.request.outage = $('input[name="optradio5"]:checked').val();
   $scope.request.test = $('input[name="optradio6"]:checked').val();
   $scope.request.SLA = $('input[name="optradio7"]:checked').val();
+  $scope.request.start_date = document.getElementById("date1").value
+  $scope.request.end_date = document.getElementById("date2").value
+  $scope.request.rt= $( "#r option:selected" ).map(function(){ return $(this).text();}).get().join();
+  $scope.request.nt= $( "#t option:selected" ).map(function(){ return $(this).text();}).get().join();
+  $scope.request.categories = $( "#c option:selected" ).map(function(){ return $(this).text();}).get().join();
 
-
-
-          if($scope.request.subject != undefined){
+  if($scope.request.subject != undefined){
 
 var json = JSON.stringify($scope.request,null, 4);
 
@@ -409,6 +410,7 @@ var json = JSON.stringify($scope.request,null, 4);
 
           });
       }
+
   };
   $scope.t_login = function(){
       RFC_factory.connectTwitter()
