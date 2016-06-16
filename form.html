@@ -173,8 +173,8 @@ margin-top: 10px;
     <div>
        <label for="sel1">Is this change a result of a P1 Ticket/Escalated issue/Emergency?</label>
      </div>
-     <label class="radio-inline"><input type="radio" name="optradio1">Yes</label>
-     <label class="radio-inline"><input type="radio" name="optradio1">No</label>
+     <label class="radio-inline"><input type="radio" name="optradio1" value="Yes">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio1" value="No">No</label>
           </div>
                </div>
                <div class="col-lg-4">
@@ -182,8 +182,8 @@ margin-top: 10px;
          <div>
          <label for="sel1">Has Change been Previously Implemented? </label>
        </div>
-       <label class="radio-inline"><input type="radio" name="optradio2">Yes</label>
-       <label class="radio-inline"><input type="radio" name="optradio2">No</label>
+       <label class="radio-inline"><input type="radio" name="optradio2" value="Yes">Yes</label>
+       <label class="radio-inline"><input type="radio" name="optradio2" value="No">No</label>
           </div>
              </div>
        </fieldset>
@@ -196,13 +196,13 @@ margin-top: 10px;
         <div>
            <label for="sel1">Duration Required</label>
          </div>
-         <label class="radio-inline"><input type="radio" name="optradio3">Standard</label>
-         <label class="radio-inline"><input type="radio" name="optradio3">smth</label>
-         <label class="radio-inline"><input type="radio" name="optradio3">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio3" value="Standard">Standard</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">smth</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">smth</label>
          <div>
             <label for="sel1">Category of Change</label>
           </div>
-          <select multiple class="form-control">
+          <select multiple class="form-control" id="c">
               <option value="1">Fix/Repair</option>
   <option value="2">Two</option>
   <option value="3">Three</option>
@@ -222,8 +222,8 @@ margin-top: 10px;
    <div>
       <label for="sel1">Hardware or Software change?</label>
     </div>
-    <label class="radio-inline"><input type="radio" name="optradio4">Hardware</label>
-    <label class="radio-inline"><input type="radio" name="optradio4">Software</label>
+    <label class="radio-inline"><input type="radio" name="optradio4" value="Hardware">Hardware</label>
+    <label class="radio-inline"><input type="radio" name="optradio4" value="Software">Software</label>
     <div>
     <label for="comment">Detailed Implementation Plan (please attach):</label>
     </div>
@@ -237,17 +237,17 @@ margin-top: 10px;
    <div>
       <label for="sel1">Outage Required? </label>
     </div>
-    <label class="radio-inline"><input type="radio" name="optradio5">Yes</label>
-    <label class="radio-inline"><input type="radio" name="optradio5">No</label>
+    <label class="radio-inline"><input type="radio" name="optradio5" value="Yes">Yes</label>
+    <label class="radio-inline"><input type="radio" name="optradio5" value="No">No</label>
     <div>
        <label for="sel1">Testing Complete? </label>
      </div>
-     <label class="radio-inline"><input type="radio" name="optradio6">Yes</label>
-     <label class="radio-inline"><input type="radio" name="optradio6">No</label>
+     <label class="radio-inline"><input type="radio" name="optradio6" value="Yes">Yes</label>
+     <label class="radio-inline"><input type="radio" name="optradio6" value="No">No</label>
      <div>
         <label for="sel1">Responsible Team </label>
       </div>
-      <select multiple class="form-control">
+      <select multiple class="form-control" id="r">
 <option value="1">IT OPS</option>
 <option value="2">Two</option>
 <option value="3">Three</option>
@@ -262,7 +262,7 @@ margin-top: 10px;
       <div>
          <label for="sel1">Teams to Notify</label>
        </div>
-       <select multiple class="form-control">
+       <select multiple class="form-control" id="t">
  <option value="1">Self-Serve Users</option>
  <option value="2">AT&T CSP</option>
  <option value="3">IT OPS</option>
@@ -270,8 +270,8 @@ margin-top: 10px;
  <div>
     <label for="sel1">SLA Impact? </label>
   </div>
-  <label class="radio-inline"><input type="radio" name="optradio7">Yes</label>
-  <label class="radio-inline"><input type="radio" name="optradio7">No</label>
+  <label class="radio-inline"><input type="radio" name="optradio7" value="Yes">Yes</label>
+  <label class="radio-inline"><input type="radio" name="optradio7" value="No">No</label>
  <div>
     <label for="sel1">Event MR# (if any)</label>
   </div>
@@ -387,7 +387,16 @@ RFC_factory.initialize();
 
   $scope.request.name= $('#username').html();
   $scope.request.email = email;
-     $scope.request.impact = $('input[name="optradio"]:checked').val();
+  $scope.request.impact = $('input[name="optradio"]:checked').val();
+  $scope.request.result = $('input[name="optradio1"]:checked').val();
+  $scope.request.implemented = $('input[name="optradio2"]:checked').val();
+  $scope.request.duration = $('input[name="optradio3"]:checked').val();
+  $scope.request.hard_soft = $('input[name="optradio4"]:checked').val();
+  $scope.request.outage = $('input[name="optradio5"]:checked').val();
+  $scope.request.test = $('input[name="optradio6"]:checked').val();
+  $scope.request.SLA = $('input[name="optradio7"]:checked').val();
+
+
 
           if($scope.request.subject != undefined){
 

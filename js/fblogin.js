@@ -66,7 +66,7 @@ var email = '';
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
       document.getElementById('username').innerHTML = response.name;
        alert(response.email);
-        email = response.email; 
+        email = response.email;
 
        });
        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
@@ -78,6 +78,7 @@ var email = '';
     // Logged into your app and Facebook.
 
   } else if (response.status === 'not_authorized') {
+
     // The person is logged into Facebook, but not your app.
     // document.getElementById('status').innerHTML = 'Please log ' +
     //   'into this app.';

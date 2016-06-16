@@ -66,7 +66,7 @@ module.exports = mongoose.model('rfc',{
     type: String,
     default: 'n/a'
   },
-  plan: {
+  detail_plan: {
     type: String,
     default: 'n/a'
   },

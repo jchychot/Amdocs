@@ -20,7 +20,25 @@ module.exports = function(app){
           end_date: req.body.end_date,
           name: req.body.name,
           email: req.body.email,
-          impact: req.body.impact
+          impact: req.body.impact,
+          benefits: req.body.benefits,
+          risks: req.body.risks,
+          result: req.body.result,
+          implemented: req.body.implemented,
+          duration: req.body.duration,
+          categories: req.body.categories,
+          host_name: req.body.host,
+          environment: req.body.envir,
+          affected_network: req.body.net,
+          hard_soft: req.body.hard_soft,
+          detail_plan: req.body.plan,
+          back_out_plan: req.body.plan2,
+          process: req.body.pi,
+          outage: req.body.outage,
+          test: req.body.test,
+          SLA: req.body.SLA,
+          event: req.body.mr,
+          ticket_num: req.body.ticket_num
       }, function(err, rfc){
           if(err)
             res.send(err);
