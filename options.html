@@ -28,6 +28,9 @@
 #authens {
   padding-top:150px
 }
+.row{
+  padding-top:150px
+}
 </style>
 
 <script scr="js/core.js"></script>
@@ -69,69 +72,34 @@
       </nav>
     </div>
   </header>
-    <div class="container">
-      <div id="notifications"></div>
-        <div class="page-header">
-          <h1>Sign in </h1>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-<form method="POST" action="." novalidate>
+  <div class="row">
 
-<div class="form-group" id="authens">
-<label class="control-label" for="email">Email</label>
+  <div class="col-lg-6">
+    <div class="btn-group btn-large">
+      <button type="button" class="btn btn-lg btn-primary test">
+        Create New Form
+      </button>
 
-<input autofocus class="form-control input-lg" id="email" name="email" type="email" value="">
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="btn-group btn-large">
+      <button type="button" class="btn btn-lg btn-primary test">
+        Modify Existing Forms
+      </button>
 
-<label class="control-label" for="password">Password</label>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="btn-group btn-large">
+      <button type="button" class="btn btn-lg btn-primary test">
+        Delete Forms 
+      </button>
 
-<div class="input-group input-group-lg">
-  <input autocomplete="off" class="form-control" id="password" name="password" type="password" value="">
-  <span class="input-group-btn">
-    <button class="btn btn-default btn-password-show" type="button" data-target="#password" data-toggle="button" title="Show/Hide Password" tabindex="-1">
-      <span class="fa fa-eye"></span>
-    </button>
-  </span>
-</div>
-</div>
-<div class="control">
-  <a class="btn btn-block btn-primary" href="form.html">
-    Sign in
-  </a>
-</div>
-
-</form>
- <legend class="text-muted text-center" style="color:black">or</legend>
-<div class="controls">
-
-<a class="btn btn-block btn-social btn-twitter">
-    <span class="fa fa-twitter"></span> Sign in with Twitter
-  </a>
-  <a class="btn btn-block btn-social btn-facebook" onclick="logIn()">
-      <span class="fa fa-facebook"></span> Sign in with Facebook
-    </a>
-    <!-- <div class="g-signin2" data-onsuccess="onSignIn">
-
-      <span class="fa fa-google"></span> Sign in with Google
-
-  </div> -->
-  <a class="g-signin2" data-onsuccess="onSignIn">
-      <span class="fa fa-google"></span> Sign in with Google
-    </a>
-</div>
-
-</div><!-- /.container -->
+    </div>
+  </div>
 
 </div>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/fblogin.js"></script>
-<script src="js/glogin.js"></script>
-<!-- facebook log in script------>
-<script src="https://connect.facebook.net/en_US/all.js"></script>
- <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
   </div>
 </html>

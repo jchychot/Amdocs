@@ -64,7 +64,7 @@ var email = '';
   if (response.status === 'connected') {
     $('#loginBtn').hide();
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
-      document.getElementById('username').innerHTML = response.name;
+      document.getElementById('username').innerHTML = 'Welcome, '+response.name;
        alert(response.email);
         email = response.email;
 
@@ -93,14 +93,27 @@ var email = '';
 }
 
  function logOut() {
-  FB.logout(function(response) {
-   console.log('logout :: ', response);
-   //Removing access token form localStorage.
-   $('#loginBtn').show();
-   $('#logoutBtn').hide();
-   window.top.location = "login.html";
+   FB.getLoginStatus(function(response) {
+        if(response.status === 'connected'){
+          FB.logout(function(response) {
+           console.log('logout :: ', response);
+           //Removing access token form localStorage.
+           $('#loginBtn').show();
+           $('#logoutBtn').hide();
+           window.top.location = "login.html";
 
-  });
- }
+          });
+        }
+        else{
+          var auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(function () {
+            console.log('User signed out.');
+          });
+        }
+
+
+   });
+
+}
 
  fbAsyncInit();
