@@ -2,14 +2,16 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-var port = process.env.PORT || 8080;
+var mongohost = process.env.MONGOHOST || 'localhost';
 var database = require('./config/database');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var port = process.env.port || 8080;
+
 
 //configuration
-mongoose.connect(database.localUrl);
+mongoose.connect('mongodb://' + mongohost + '/Amdocs');
 app.set('json spaces', 4);
 app.use(express.static(__dirname)); 		// set the static files location /public/img will be /img for users
 app.use(morgan('dev'));

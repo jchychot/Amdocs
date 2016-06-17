@@ -98,7 +98,6 @@ var email = '';
    //Removing access token form localStorage.
    $('#loginBtn').show();
    $('#logoutBtn').hide();
-   $('#userDetails').hide();
    window.top.location = "login.html";
 
   });
