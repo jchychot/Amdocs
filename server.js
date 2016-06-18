@@ -7,7 +7,7 @@ var database = require('./config/database');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var port = process.env.port || 8080;
+var port = process.env.PORT || 8080;
 
 
 //configuration
