@@ -1,4 +1,8 @@
+
+
+
 function onSignIn(googleUser) {
+
      // Useful data for your client-side scripts:
      var profile = googleUser.getBasicProfile();
      console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -8,14 +12,14 @@ function onSignIn(googleUser) {
      console.log("Image URL: " + profile.getImageUrl());
      console.log("Email: " + profile.getEmail());
 document.getElementById('username').innerHTML ='Welcome, ' + profile.getGivenName();
-document.getElementById('pic').src = 'https://lh6.googleusercontent.com/-qLkLYm0Q0qk/AAAAAAAAAAI/AAAAAAAAA1Q/VxG4_2KhWFA/s96-c/photo.jpg';
-
+//document.getElementById('pic').src = 'https://lh6.googleusercontent.com/-qLkLYm0Q0qk/AAAAAAAAAAI/AAAAAAAAA1Q/VxG4_2KhWFA/s96-c/photo.jpg';
+document.getElementById('pic').src = profile.getImageUrl();
      // The ID token you need to pass to your backend:
      var id_token = googleUser.getAuthResponse().id_token;
      console.log("ID Token: " + id_token);
-       window.top.location = "options.html";
+//       window.top.location = "options.html";
 
-   };
+   }
 
 
    function signOut() {

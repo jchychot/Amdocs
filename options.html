@@ -29,7 +29,17 @@
   padding-top:150px
 }
 .row{
-  padding-top:150px
+  padding-top:150px;
+  padding-left:50px;
+}
+#list{
+  padding-top:150px;
+  padding-left:50px;
+}
+.table table-hover{
+
+  padding-left:50px;
+margin-top: 10px;
 }
 </style>
 
@@ -72,34 +82,58 @@
       </nav>
     </div>
   </header>
-  <div class="row">
 
-  <div class="col-lg-6">
-    <div class="btn-group btn-large">
-      <button type="button" class="btn btn-lg btn-primary test">
-        Create New Form
-      </button>
-
-    </div>
-  </div>
-  <div class="col-lg-6">
-    <div class="btn-group btn-large">
-      <button type="button" class="btn btn-lg btn-primary test">
-        Modify Existing Forms
-      </button>
-
-    </div>
-  </div>
-  <div class="col-lg-6">
-    <div class="btn-group btn-large">
-      <button type="button" class="btn btn-lg btn-primary test">
-        Delete Forms 
-      </button>
-
-    </div>
-  </div>
-
+<div class="container" id="list">
+  <a href="form.html" type="button" class="btn btn-primary test">
+    Create New Form
+  </a>
+  <button type="button" class="btn btn-warning test">
+    Modify Existing Forms
+  </button>
+  <button type="button" class="btn btn-danger test">
+    Delete Forms
+  </button>
+  <table class="table table-hover">
+     <thead>
+       <tr>
+         <th>Subject</th>
+         <th>Creation Date</th>
+         <th>Status</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr ng-repeat="rfc in rfcs | filter:{ email: larrypoon.lp@gmail}:true">
+         <td>{{rfc.subject}}</td>
+         <td>{{rfc.creation_date}}</td>
+         <td>{{rfc.status}}</td>
+       </tr>
+     </tbody>
+   </table>
 </div>
+<script>
+// web services
+angular.module('user_forms', [])
+.factory('user_factory', ['$http', '$q', function($http, $q){
+  return{
+    get_form: function(){
+        return $http.get('/api/rfc');
+    },
+    delete_form: function(subject){
+      return $http.delete('/api/rfc',subject);
+    }
+
+  }
+}]);
+// controller
+angular.module('user_control',[])
+.controller('user_controller', ['$scope', '$http', 'user_factory', function($scope, $http, user_factory){
+user_factory.get_form()
+.success(function(data){
+  $scope.rfcs = data;
+});
+
+}]);
+</script>
 </body>
   </div>
 </html>
