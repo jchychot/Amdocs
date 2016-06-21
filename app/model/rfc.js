@@ -100,11 +100,11 @@ module.exports = mongoose.model('rfc',{
     type: Number,
     default: 0
   },
-  creation_date{
+  creation_date: {
     type: Date,
     default: Date.now
   },
-  status{
+  status: {
     type: String,
     default: 'pending'
   }

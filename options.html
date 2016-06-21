@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="main_page">
+<html lang="en" id="main_page" ng-app="listapp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-social.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 <!-- Custom styles for this template -->
 
@@ -43,8 +44,12 @@ margin-top: 10px;
 }
 </style>
 
-<script scr="js/core.js"></script>
-<body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+<script src="js/glogin.js"></script>
+<script src="js/fblogin.js"></script>
+<body ng-controller="user_controller">
 <header class= "navbar navbar-inverse navbar-fixed-top">
   <div class="container">
       <div class="navbar-header">
@@ -102,7 +107,7 @@ margin-top: 10px;
        </tr>
      </thead>
      <tbody>
-       <tr ng-repeat="rfc in rfcs | filter:{ email: larrypoon.lp@gmail}:true">
+      <tr ng-repeat="rfc in rfcs | filter:{email: email2}">
          <td>{{rfc.subject}}</td>
          <td>{{rfc.creation_date}}</td>
          <td>{{rfc.status}}</td>
@@ -110,6 +115,7 @@ margin-top: 10px;
      </tbody>
    </table>
 </div>
+
 <script>
 // web services
 angular.module('user_forms', [])
@@ -120,20 +126,35 @@ angular.module('user_forms', [])
     },
     delete_form: function(subject){
       return $http.delete('/api/rfc',subject);
+    },
+    get_form_email: function(email){
+      return $http.get('/api/rfc/' + email);
     }
-
   }
 }]);
+// filter
+angular.module('Ufilte', [])
+.filter('user_filter', function(){
+  return function(rfcs){
+    return rfcs.filter(function(rfc){
+      return rfc.email = email2;
+    });
+  };
+});
 // controller
 angular.module('user_control',[])
-.controller('user_controller', ['$scope', '$http', 'user_factory', function($scope, $http, user_factory){
-user_factory.get_form()
+.controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
+user_factory.get_form_email('larrypoon.lp@gmail.com')
 .success(function(data){
   $scope.rfcs = data;
 });
 
 }]);
+
+// core
+angular.module('listapp', ['user_control', 'user_forms', 'ngRoute']);
 </script>
+
 </body>
   </div>
 </html>

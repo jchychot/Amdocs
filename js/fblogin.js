@@ -2,6 +2,7 @@ $( document ).ready(function() {
 checkLoginState();
   // $('#logoutBtn').hide();
   // $('#userDetails').hide();
+
  });
  function fbAsyncInit() {
   FB.init({
@@ -40,7 +41,7 @@ checkLoginState();
              $('#userPic').attr('src', response.data.url);
            }
         });
-        window.top.location = "form.html";
+        window.top.location = "options.html";
     }
    }
    ,{
@@ -53,7 +54,7 @@ function checkLoginState(){
    statusChangeCallback(response);
  });
 }
-var email = '';
+var email2 = '';
  function statusChangeCallback(response) {
   console.log('statusChangeCallback');
   console.log(response);
@@ -64,9 +65,9 @@ var email = '';
   if (response.status === 'connected') {
     $('#loginBtn').hide();
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
-      document.getElementById('username').innerHTML = 'Welcome, '+response.name;
+      document.getElementById('username').innerHTML = response.name;
        alert(response.email);
-        email = response.email;
+        email2 = response.email;
 
        });
        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
