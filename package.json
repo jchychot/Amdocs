@@ -1,7 +1,7 @@
 {
   "name": "Amdoc-RFC",
   "version": "0.0.1",
-  "description":"RFC form from 3rd parties" ,
+  "description": "RFC form from 3rd parties",
   "main": "server.js",
   "author": "Larry Poon-Amdocs",
   "dependencies": {
@@ -10,7 +10,8 @@
     "method-override": "^2.1.3",
     "mongoose": "^4.4.12",
     "morgan": "^1.1.1",
-    "qs":"*",
-    "oauth": "*"
+    "oauth": "*",
+    "qs": "*",
+    "toastr": "^2.1.2"
   }
 }

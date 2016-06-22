@@ -48,8 +48,8 @@ margin-top: 10px;
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="https://connect.facebook.net/en_US/all.js"></script>
 <script src="js/glogin.js"></script>
-<script src="js/fblogin.js"></script>
-<body ng-controller="user_controller">
+<script src="js/options.js"></script>
+<body ng-controller="user_controller" id="control">
 <header class= "navbar navbar-inverse navbar-fixed-top">
   <div class="container">
       <div class="navbar-header">
@@ -144,11 +144,15 @@ angular.module('Ufilte', [])
 // controller
 angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
-user_factory.get_form_email('larrypoon.lp@gmail.com')
+
+$scope.getList = function(email) {
+
+user_factory.get_form_email(email)
 .success(function(data){
   $scope.rfcs = data;
-});
 
+});
+};
 }]);
 
 // core
