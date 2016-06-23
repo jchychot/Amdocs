@@ -66,7 +66,7 @@ var email2 = '';
     $('#loginBtn').hide();
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
       document.getElementById('username').innerHTML = response.name;
-       alert(response.email);
+    
         email2 = response.email;
 
        });

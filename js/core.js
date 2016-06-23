@@ -15,6 +15,9 @@ return{
   modify_form : function(data){
     return $http.put('/api/rfc', data);
   },
+  getCC : function(email,id){
+    return $http.get('/api/rfc/'+email+'/' + id);
+  },
 
         initialize: function() {
             //initialize OAuth.io with public key of the application
@@ -92,7 +95,8 @@ var json = JSON.stringify($scope.request,null, 4);
 
           });
       }
-      else {toastr.error('Please fill in required fields!','Error',{
+      else {
+        toastr.error('Please fill in required fields!','Error',{
         "closeButton": false,
         "debug": false,
         "newestOnTop": false,
@@ -109,6 +113,7 @@ var json = JSON.stringify($scope.request,null, 4);
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
       });
+      window.top.location = "#";
     }
               window.top.location = "options.html";
   };
@@ -121,6 +126,64 @@ var json = JSON.stringify($scope.request,null, 4);
 
 
   };
+
+  $scope.getCC = function(email, id){
+
+    RFC_factory.getCC(email,id)
+    .then(function(obj){
+      console.log(obj.data[0]);
+console.log(obj.data[0].email);
+console.log(obj.data[0].SLA);
+
+$scope.request.subject = obj.data[0].subject;
+$scope.request.impact = obj.data[0].impact;
+$scope.request.result = obj.data[0].result;
+$scope.request.outage = obj.data[0].subject;
+$scope.request.test = obj.data[0].test;
+$scope.request.descriptions= obj.data[0].descriptions;
+$scope.request.start_date = obj.data[0].start_date ;
+$scope.request.end_date = obj.data[0].end_date;
+if(obj.data[0].status === 'pending'){
+  toastr.warning('Pending','Status',{
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  });
+}
+if(obj.data[0].status === 'Rejected'){
+  toastr.error('Pending','Status',{
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  });
+}
+    });
+  };
+
 
 }]);
 // core

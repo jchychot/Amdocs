@@ -22,34 +22,7 @@ checkLoginState();
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
- function logIn() {
-    FB.login(
-         function(response) {
-    if (response.status== 'connected') {
-     FB.api('/me', function(response) {
-         console.log(response);
-           console.log('Good to see you, ' + response.name + '.');
-           $('#loginBtn').hide();
-           $('#logoutBtn').show();
 
-
-
-        });
-        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
-           if (response && !response.error) {
-             /* handle the result */
-             console.log('PIC ::', response);
-             $('#userPic').attr('src', response.data.url);
-           }
-        });
-        window.top.location = "options.html";
-    }
-   }
-   ,{
- scope: "email"
-     }
-  );
- }
 function checkLoginState(){
  FB.getLoginStatus(function(response) {
    statusChangeCallback(response);

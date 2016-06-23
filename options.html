@@ -108,9 +108,9 @@ margin-top: 10px;
      </thead>
      <tbody>
       <tr ng-repeat="rfc in rfcs | filter:{email: email2}">
-         <td>{{rfc.subject}}</td>
-         <td>{{rfc.creation_date}}</td>
-         <td>{{rfc.status}}</td>
+         <td ng-click="getID(rfc._id)">{{rfc.subject}}</td>
+         <td ng-click="getID(rfc._id)">{{rfc.creation_date}}</td>
+         <td ng-click="getID(rfc._id)">{{rfc.status}}</td>
        </tr>
      </tbody>
    </table>
@@ -153,6 +153,13 @@ user_factory.get_form_email(email)
 
 });
 };
+
+$scope.getID = function(id) {
+
+   window.top.location = "form.html"+ '?id='+ id;
+
+}
+
 }]);
 
 // core
