@@ -294,22 +294,21 @@ $(function () {
 });
 });
 var id = getParameterByName('id');
-$( document ).ready(function() {
-//hi();
 
-if(id == null) hi();
-var scope = angular.element(document.getElementById("page-top")).scope();
-  scope.$apply(function () {
-  scope.getCC('larrypoon.lp@gmail.com',id);
-  });
-  // $('#logoutBtn').hide();
-  // $('#userDetails').hide();
+// onReady
+$( document ).ready(function() {
+
+
+if(id == null) {
+  hi();
+}
+
 
  });
 
 </script>
 <script src="js/glogin.js"></script>
-<script src="js/fblogin.js"></script>
+<script src="js/form.js"></script>
 <script>
 
 function hi(){

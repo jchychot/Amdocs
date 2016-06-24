@@ -19,6 +19,7 @@ return{
     return $http.get('/api/rfc/'+email+'/' + id);
   },
 
+
         initialize: function() {
             //initialize OAuth.io with public key of the application
             OAuth.initialize('19gVB-kbrzsJWQs5o7Ha2LIeX4I', {
@@ -94,6 +95,7 @@ var json = JSON.stringify($scope.request,null, 4);
               $scope.request = {};
 
           });
+            window.top.location = "options.html";
       }
       else {
         toastr.error('Please fill in required fields!','Error',{
@@ -113,9 +115,9 @@ var json = JSON.stringify($scope.request,null, 4);
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
       });
-      window.top.location = "#";
+
     }
-              window.top.location = "options.html";
+
   };
   $scope.t_login = function(){
       RFC_factory.connectTwitter()

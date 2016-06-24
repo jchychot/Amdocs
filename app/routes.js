@@ -10,10 +10,10 @@ module.exports = function(app){
         res.json(rfc);
       });
   });
-  
+
   app.get('/api/rfc/:email', function(req, res){
     rfc.find({
-         email: req.params.email,
+         email: req.params.email
         //  _id: req.params.email
     },function(err,rfc){
         if(err){
@@ -23,6 +23,7 @@ module.exports = function(app){
     });
 
   });
+  
   app.get('/api/rfc/:email/:_id', function(req, res){
     rfc.find({
          email: req.params.email,

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" id="main_page" ng-app="listapp2">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="google-signin-client_id" content="564236928671-crejp57oa63oc44jjjnbf7jqj9qes9t9.apps.googleusercontent.com">
+<title>Amodcs</title>
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-social.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<!-- Custom styles for this template -->
+
+<link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+
+ <script src="js/oauth.js"></script>
+</head>
+<div style="width:100%; padding-bottom: 25%; background:url('images/background.gif');
+       background-size: 1680px 1050px">
+<style>
+#notifications {
+  padding-top:50px
+}
+#authens {
+  padding-top:150px
+}
+.row{
+  padding-top:150px;
+  padding-left:50px;
+}
+#list{
+  padding-top:150px;
+  padding-left:50px;
+}
+.table table-hover{
+
+  padding-left:50px;
+margin-top: 10px;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+<script src="js/glogin.js"></script>
+<script src="js/approval.js"></script>
+<body ng-controller="admin_controller" id="admin">
+<header class= "navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand" href="http://www.amdocs.com/pages/homepage.aspx">Amdocs</a>
+      </div>
+      <nav class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+    <li class="">
+      <a href="/feedback/"><span class="fa fa-fw fa-comment"></span> Feedback</a>
+    </li>
+    <li>
+      <a target="gae-init-docs"> <i class="fa fa-fw fa-phone"></i> Contact</a>
+    </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a><img src="images/user.jpg" id="pic" height="20" width="20"></a>
+              </li>
+          <li>
+            <a id="username">--</a>
+          </li>
+          <li>
+            <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+          </li>
+    <li class="active">
+      <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
+    </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<div class="container" id="list">
+
+  <table class="table table-hover">
+     <thead>
+       <tr>
+         <th>Subject</th>
+         <th>Creation Date</th>
+          <th>Creator</th>
+          <th>Contacts</th>
+         <th>Actions</th>
+       </tr>
+     </thead>
+     <tbody>
+      <tr ng-repeat="rfc in rfcs">
+         <td>{{rfc.subject}}</td>
+         <td>{{rfc.creation_date}}</td>
+         <td>{{rfc.name}}</td>
+            <td>{{rfc.email}}</td>
+            <td id="actions">
+              <button type="submit" class="btn btn-success" ng-click="approve(rfc.email,rfc._id)">Approve</button>
+              <button type="submit" class="btn btn-danger" ng-click="reject()">Reject</button>
+            </td>
+       </tr>
+     </tbody>
+   </table>
+</div>
+
+<script>
+// web services
+angular.module('admin_forms', [])
+.factory('admin_factory', ['$http', '$q', function($http, $q){
+  return{
+    get_form: function(){
+        return $http.get('/api/rfc');
+    },
+    delete_form: function(subject){
+      return $http.delete('/api/rfc',subject);
+    },
+    changeStatus : function(email,id){
+      return $http.get('/api/rfc/'+email+'/' + id);
+    }
+  }
+}]);
+
+// controller
+angular.module('admin_control',[])
+.controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
+
+$scope.getList = function(email) {
+
+admin_factory.get_form()
+.success(function(data){
+  $scope.rfcs = data;
+
+});
+};
+
+$scope.approve = function(email,id){
+
+  admin_factory.changeStatus(email, id)
+  .success(function(obj){
+   $('#actions').hide();
+   $('#status').show();
+
+});
+
+
+};
+
+
+
+}]);
+
+// core
+angular.module('listapp2', ['admin_control', 'admin_forms', 'ngRoute']);
+</script>
+
+</body>
+  </div>
+</html>
