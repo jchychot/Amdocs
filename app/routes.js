@@ -1,7 +1,7 @@
   var rfc = require('./model/rfc');
 
 module.exports = function(app){
-
+// routes for rfc app
   app.get('/api/rfc', function(req,res){
       rfc.find(function(err,rfc){
           if(err){
@@ -23,7 +23,7 @@ module.exports = function(app){
     });
 
   });
-  
+
   app.get('/api/rfc/:email/:_id', function(req, res){
     rfc.find({
          email: req.params.email,
@@ -67,7 +67,8 @@ module.exports = function(app){
           event: req.body.mr,
           ticket_num: req.body.ticket_num,
           responsible_teams: req.body.rt,
-          notify_teams: req.body.nt
+          notify_teams: req.body.nt,
+          status: req.body.status
       }, function(err, rfc){
           if(err)
             res.send(err);
@@ -82,8 +83,43 @@ module.exports = function(app){
       console.log("static site sent");
   });
 
+// find id and update
+app.put('/api/rfc/:_id', function(req,res,next){
+  rfc.findByIdAndUpdate(req.params._id, req.body, function (err, obj) {
+        if (err) return next(err);
+        res.json(obj);
+        console.log(obj);
+});
+});
 
+///////////////////routes for auth
 
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
+// handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect : '/profile',
+        failureRedirect : '/'
+    }));
+
+// route for logging out
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+};
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+
+// if user is authenticated in the session, carry on
+if (req.isAuthenticated())
+    return next();
+
+// if they aren't redirect them to the home page
+res.redirect('/');
+}
 
 };

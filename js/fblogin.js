@@ -66,7 +66,7 @@ var email2 = '';
     $('#loginBtn').hide();
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
       document.getElementById('username').innerHTML = response.name;
-    
+
         email2 = response.email;
 
        });
@@ -88,7 +88,7 @@ var email2 = '';
     // they are logged into this app or not.
     // document.getElementById('status').innerHTML = 'Please log ' +
     //   'into Facebook.';
-     $('#logoutBtn').hide();
+
      $('#username').hide();
   }
 }

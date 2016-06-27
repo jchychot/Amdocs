@@ -107,8 +107,8 @@ margin-top: 10px;
          <td>{{rfc.name}}</td>
             <td>{{rfc.email}}</td>
             <td id="actions">
-              <button type="submit" class="btn btn-success" ng-click="approve(rfc.email,rfc._id)">Approve</button>
-              <button type="submit" class="btn btn-danger" ng-click="reject()">Reject</button>
+              <button type="submit" class="btn btn-success" ng-click="approve(rfc._id)">Approve</button>
+              <button type="submit" class="btn btn-danger" ng-click="reject(rfc._id)">Reject</button>
             </td>
        </tr>
      </tbody>
@@ -126,9 +126,10 @@ angular.module('admin_forms', [])
     delete_form: function(subject){
       return $http.delete('/api/rfc',subject);
     },
-    changeStatus : function(email,id){
-      return $http.get('/api/rfc/'+email+'/' + id);
+    changeStatus : function(id, status){
+      return $http.put('/api/rfc/'+ id, status);
     }
+
   }
 }]);
 
@@ -145,18 +146,27 @@ admin_factory.get_form()
 });
 };
 
-$scope.approve = function(email,id){
+$scope.approve = function(id){
 
-  admin_factory.changeStatus(email, id)
+  // admin_factory.changeStatus(id, {"status" : 'approved'})
+
+admin_factory.changeStatus(id, {"status" : 'approved'})
+.success(function(obj){
+ $('#actions').hide();
+ $('#status').show();
+});
+
+};
+$scope.reject = function(id){
+
+  admin_factory.changeStatus(id, {"status" : 'rejected'})
   .success(function(obj){
    $('#actions').hide();
    $('#status').show();
-
-});
+  });
 
 
 };
-
 
 
 }]);

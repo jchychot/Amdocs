@@ -62,7 +62,7 @@ angular.module('rfcController',[])
 
 .controller('mainController', ['$scope', '$http','RFC_factory','$q',  function($scope, $http, RFC_factory,$q){
 $scope.request = {};
-
+$scope.request.status = 'pending';
 //initialize twitter
 RFC_factory.initialize();
 //RFC_factory.initialize();
@@ -164,8 +164,27 @@ if(obj.data[0].status === 'pending'){
     "hideMethod": "fadeOut"
   });
 }
-if(obj.data[0].status === 'Rejected'){
-  toastr.error('Pending','Status',{
+if(obj.data[0].status === 'approved'){
+  toastr.success('Approved!','Status',{
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  });
+}
+if(obj.data[0].status === 'rejected'){
+  toastr.error('Rejected!','Status',{
     "closeButton": false,
     "debug": false,
     "newestOnTop": false,

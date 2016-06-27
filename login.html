@@ -26,7 +26,8 @@
   padding-top:50px
 }
 #authens {
-  padding-top:150px
+  padding-top:150px;
+
 }
 
 </style>
@@ -61,7 +62,7 @@
             <a id="username">--</a>
           </li>
           <li>
-            <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+            <a id="logoutBtn" onclick="signOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
     <li class="active">
       <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -112,11 +113,13 @@
       <span class="fa fa-facebook"></span> Sign in with Facebook
     </a>
 
- <a class="g-signin2" data-onsuccess="onSignIn">
-      <span class="fa fa-google"></span> Sign in with Google
-    </a>
 
-
+    <a class="btn btn-block btn-social btn-linkedin">
+        <span class="fa fa-linkedin"></span> Sign in with Linkedin
+      </a>
+      <a class="g-signin2" data-width="360" data-height="30" data-border-radius="30" data-onsuccess="onSignIn">
+           <span class="fa fa-google"></span> Sign in with Google
+         </a>
 
 
 </div>
