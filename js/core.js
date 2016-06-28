@@ -3,6 +3,9 @@ angular.module('rfcService', [])
 .factory('RFC_factory', ['$http','$q', function($http, $q){
 var authorizationResult = false;
 return{
+  create_user : function(data){
+    return $http.post('/api/user', data);
+  },
   create_form : function(data){
       return $http.post('/api/rfc', data);
   },
@@ -11,6 +14,9 @@ return{
   },
   get : function() {
       return $http.get('/api/rfc');
+},
+get_user : function() {
+    return $http.get('/api/user');
 },
   modify_form : function(data){
     return $http.put('/api/rfc', data);
@@ -63,10 +69,24 @@ angular.module('rfcController',[])
 .controller('mainController', ['$scope', '$http','RFC_factory','$q',  function($scope, $http, RFC_factory,$q){
 $scope.request = {};
 $scope.request.status = 'pending';
+$scope.facebook = {};
 //initialize twitter
 RFC_factory.initialize();
 //RFC_factory.initialize();
   // create entry
+$scope.fb_login = function(id, name, email){
+  $scope.facebook.fbId = id;
+  $scope.facebook.name = name;
+  $scope.facebook.fbemail = email;
+  var json = JSON.stringify($scope.facebook,null, 4);
+  console.log(json);
+  RFC_factory.create_user(json)
+  .success(function(){
+    $scope.facebook = {};
+  });
+
+};
+
   $scope.createRFC = function(){
 
   $scope.request.name= $('#username').html();

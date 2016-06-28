@@ -1,6 +1,6 @@
   var rfc = require('./model/rfc');
-
-module.exports = function(app){
+  var User = require('./model/user');
+module.exports = function(app, passport){
 // routes for rfc app
   app.get('/api/rfc', function(req,res){
       rfc.find(function(err,rfc){
@@ -9,7 +9,7 @@ module.exports = function(app){
           }
         res.json(rfc);
       });
-  });
+  } );
 
   app.get('/api/rfc/:email', function(req, res){
     rfc.find({
@@ -36,7 +36,37 @@ module.exports = function(app){
     });
 
   });
+// get users
+  app.get('/api/user', function(req,res){
+      rfc.find(function(err,rfc){
+          if(err){
+            res.send(err);
+          }
+        res.json(rfc);
+      });
+  } );
+// create user
+  app.post('/api/user', function(req,res){
+    User.findOne({ 'facebook.id' : req.body.fbId}, function(err, user) {
+      if (err)
+          return res.send(err);
+          if (user) {
+              return;
+            }  else{
+      User.create({
+        facebook: {
+          email : req.body.fbemail,
+          id : req.body.fbId,
+          role : 'user'
+        }
+      },function(err,user){
+        if(err)
+          res.send(err);
+      });
+    }
+  });
 
+  });
 
   //create entry
   app.post('/api/rfc', function(req,res){
@@ -77,11 +107,11 @@ module.exports = function(app){
   });
 
   // application
-  app.get('*', function(req, res){
+  app.get('/', function(req, res){
       var path = require('path');
       res.sendFile(path.resolve(__dirname + '/../login.html'));
-      console.log("static site sent");
   });
+
 
 // find id and update
 app.put('/api/rfc/:_id', function(req,res,next){
@@ -94,12 +124,22 @@ app.put('/api/rfc/:_id', function(req,res,next){
 
 ///////////////////routes for auth
 
+//////////facebook
+app.get('/options', isLoggedIn, function(req, res) {
+  var path = require('path');
+    console.log(req.user);
+    if(req.user.facebook.role === 'user')
+  res.sendFile(path.resolve(__dirname + '/../options.html'));
+  else   res.sendFile(path.resolve(__dirname + '/../approval.html'));
+
+});
+
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect : '/profile',
+        successRedirect : '/../options',
         failureRedirect : '/'
     }));
 
@@ -115,11 +155,10 @@ app.get('/logout', function(req, res) {
 function isLoggedIn(req, res, next) {
 
 // if user is authenticated in the session, carry on
-if (req.isAuthenticated())
+if (req.isAuthenticated()){
+  //  console.log(req.user);
     return next();
-
+}
 // if they aren't redirect them to the home page
 res.redirect('/');
 }
-
-};

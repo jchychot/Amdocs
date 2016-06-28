@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="main_page">
+<html lang="en" id="main_page" ng-app="rfcapp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,6 @@
 
 <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
 
- <script src="js/oauth.js"></script>
 </head>
 <div style="width:100%; padding-bottom: 25%; background:url('images/background.gif');
        background-size: 1680px 1050px">
@@ -32,8 +31,8 @@
 
 </style>
 
-<script scr="js/core.js"></script>
-<body>
+
+<body ng-controller="mainController" id="login">
 <header class= "navbar navbar-inverse navbar-fixed-top">
   <div class="container">
       <div class="navbar-header">
@@ -70,6 +69,19 @@
         </ul>
       </nav>
     </div>
+    <script src="js/oauth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="https://connect.facebook.net/en_US/all.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/glogin.js"></script>
+
+    <!-- facebook log in script------>
+
+     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </header>
     <div class="container">
       <div id="notifications"></div>
@@ -106,10 +118,10 @@
  <legend class="text-muted text-center" style="color:black">or</legend>
 <div class="controls">
 
-<a class="btn btn-block btn-social btn-twitter">
+<a class="btn btn-block btn-social btn-twitter" ng-click="t_login()">
     <span class="fa fa-twitter"></span> Sign in with Twitter
   </a>
-  <a class="btn btn-block btn-social btn-facebook" onclick="logIn()">
+  <a class="btn btn-block btn-social btn-facebook" href="auth/facebook">
       <span class="fa fa-facebook"></span> Sign in with Facebook
     </a>
 
@@ -129,14 +141,6 @@
 </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://connect.facebook.net/en_US/all.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/fblogin.js"></script>
-<script src="js/glogin.js"></script>
-<!-- facebook log in script------>
-
- <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
   </div>
 </html>
