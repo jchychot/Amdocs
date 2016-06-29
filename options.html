@@ -78,7 +78,7 @@ margin-top: 10px;
             <a id="username">--</a>
           </li>
           <li>
-            <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+            <a id="logoutBtn" ng-click="logout()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
     <li class="active">
       <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -129,6 +129,9 @@ angular.module('user_forms', [])
     },
     get_form_email: function(email){
       return $http.get('/api/rfc/' + email);
+    },
+    log_out : function(){
+      return $http.get('/logout');
     }
   }
 }]);
@@ -144,6 +147,10 @@ angular.module('Ufilte', [])
 // controller
 angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
+
+$scope.logout = function(){
+  user_factory.log_out();
+};
 
 $scope.getList = function(email) {
 

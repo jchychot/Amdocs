@@ -14,13 +14,22 @@ var userSchema = mongoose.Schema({
         id           : String,
         token        : String,
         displayName  : String,
-        username     : String
+        username     : String,
+        role         : String
     },
     google           : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        role         : String
+    },
+    linkedin          : {
+        id           : String,
+        token        : String,
+        name         : String,
+        email        : String,
+        role         : String
     }
 
 });

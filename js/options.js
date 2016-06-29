@@ -1,9 +1,15 @@
 
 $( document ).ready(function() {
-
-checkLoginState();
+  var email2 = getParameterByName('email');
+  var scope = angular.element(document.getElementById("control")).scope();
+    scope.$apply(function () {
+    scope.getList(email2);
+    });
+//checkLoginState();
 
  });
+
+
 
  function fbAsyncInit() {
   FB.init({
@@ -30,7 +36,7 @@ function checkLoginState(){
 }
 var email2 = '';
  function statusChangeCallback(response) {
-  console.log('statusChangeCallback');
+
   console.log(response);
   // The response object is returned with a status field that lets the
   // app know the current login status of the person.
@@ -65,7 +71,7 @@ var email2 = '';
     // they are logged into this app or not.
     // document.getElementById('status').innerHTML = 'Please log ' +
     //   'into Facebook.';
-     $('#logoutBtn').hide();
+  //   $('#logoutBtn').hide();
      $('#username').hide();
   }
 }

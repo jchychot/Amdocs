@@ -124,24 +124,51 @@ app.put('/api/rfc/:_id', function(req,res,next){
 
 ///////////////////routes for auth
 
-//////////facebook
+
 app.get('/options', isLoggedIn, function(req, res) {
-  var path = require('path');
-    console.log(req.user);
-    if(req.user.facebook.role === 'user')
-  res.sendFile(path.resolve(__dirname + '/../options.html'));
-  else   res.sendFile(path.resolve(__dirname + '/../approval.html'));
+  rfc.find({
+       email: req.user.facebook.email
+  },function(err,rfc){
+      if(err){
+        res.send(err);
+      }
+    res.json(rfc);
+  });
+
+
+
 
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile','email'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/linkedin',passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
 // handle the callback after facebook has authenticated the user
+app.get('/auth/linkedin/callback',
+passport.authenticate('linkedin', {
+    successRedirect : '/../options',
+    failureRedirect : '/'
+}));
+//////////facebook
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect : '/../options',
         failureRedirect : '/'
     }));
+app.get('/auth/google/callback',
+          passport.authenticate('google', {
+                  successRedirect : '/../options',
+                  failureRedirect : '/'
+          }));
+
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', {
+        successRedirect : '/../options',
+        failureRedirect : '/'
+    }));
+
+
 
 // route for logging out
 app.get('/logout', function(req, res) {
@@ -156,7 +183,7 @@ function isLoggedIn(req, res, next) {
 
 // if user is authenticated in the session, carry on
 if (req.isAuthenticated()){
-  //  console.log(req.user);
+
     return next();
 }
 // if they aren't redirect them to the home page

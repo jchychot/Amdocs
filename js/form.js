@@ -1,8 +1,12 @@
 $( document ).ready(function() {
-checkLoginState();
+//checkLoginState();
   // $('#logoutBtn').hide();
   // $('#userDetails').hide();
-
+  var id = getParameterByName('id');
+  var scope = angular.element(document.getElementById("page-top")).scope();
+    scope.$apply(function () {
+    scope.getCC(email2,id);
+    });
  });
  function fbAsyncInit() {
   FB.init({
@@ -55,7 +59,7 @@ function checkLoginState(){
  });
 }
 var email2 = '';
-var id = getParameterByName('id');
+
  function statusChangeCallback(response) {
   console.log('statusChangeCallback');
   console.log(response);
