@@ -21,8 +21,8 @@ get_user : function() {
   modify_form : function(data){
     return $http.put('/api/rfc', data);
   },
-  getCC : function(email,id){
-    return $http.get('/api/rfc/'+email+'/' + id);
+  getCC : function(id){
+    return $http.get('/api/rfc/'+ id);
   },
 
 
@@ -149,13 +149,10 @@ var json = JSON.stringify($scope.request,null, 4);
 
   };
 
-  $scope.getCC = function(email, id){
+  $scope.getCC = function(id){
 
-    RFC_factory.getCC(email,id)
+    RFC_factory.getCC(id)
     .then(function(obj){
-      console.log(obj.data[0]);
-console.log(obj.data[0].email);
-console.log(obj.data[0].SLA);
 
 $scope.request.subject = obj.data[0].subject;
 $scope.request.impact = obj.data[0].impact;

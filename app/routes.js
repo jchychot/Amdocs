@@ -1,5 +1,9 @@
   var rfc = require('./model/rfc');
   var User = require('./model/user');
+  var acc_email ='';
+  var acc_role ='';
+  var acc_url = '/../options.html';
+  var acc_name = '';
 module.exports = function(app, passport){
 // routes for rfc app
   app.get('/api/rfc', function(req,res){
@@ -11,9 +15,9 @@ module.exports = function(app, passport){
       });
   } );
 
-  app.get('/api/rfc/:email', function(req, res){
+  app.get('/api/rfc/:_id', function(req, res){
     rfc.find({
-         email: req.params.email
+         _id: req.params._id
         //  _id: req.params.email
     },function(err,rfc){
         if(err){
@@ -69,14 +73,14 @@ module.exports = function(app, passport){
   });
 
   //create entry
-  app.post('/api/rfc', function(req,res){
+  app.post('/api/rfc', isLoggedIn, function(req,res){
       rfc.create({
           subject: req.body.subject,
           descriptions: req.body.descriptions,
           start_date: req.body.start_date,
           end_date: req.body.end_date,
-          name: req.body.name,
-          email: req.body.email,
+          name: acc_name,
+          email: acc_email,
           impact: req.body.impact,
           benefits: req.body.benefits,
           risks: req.body.risks,
@@ -126,45 +130,51 @@ app.put('/api/rfc/:_id', function(req,res,next){
 
 
 app.get('/options', isLoggedIn, function(req, res) {
+// use facebook email by default
   rfc.find({
-       email: req.user.facebook.email
+       email: acc_email
   },function(err,rfc){
       if(err){
         res.send(err);
       }
     res.json(rfc);
   });
-
-
-
-
 });
-
+app.get('/approval', isLoggedIn, function(req, res) {
+// use facebook email by default
+  rfc.find(function(err,rfc){
+      if(err){
+        res.send(err);
+      }
+    res.json(rfc);
+  });
+});
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile','email'] }));
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/linkedin',passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
 // handle the callback after facebook has authenticated the user
+
 app.get('/auth/linkedin/callback',
 passport.authenticate('linkedin', {
-    successRedirect : '/../options',
+    successRedirect : '/../options.html',
     failureRedirect : '/'
 }));
 //////////facebook
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect : '/../options',
+        successRedirect : acc_url,
         failureRedirect : '/'
     }));
 app.get('/auth/google/callback',
           passport.authenticate('google', {
-                  successRedirect : '/../options',
+                  successRedirect : '/../options.html',
                   failureRedirect : '/'
           }));
 
 app.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
-        successRedirect : '/../options',
+        successRedirect : '/../options.html',
         failureRedirect : '/'
     }));
 
@@ -172,8 +182,9 @@ app.get('/auth/twitter/callback',
 
 // route for logging out
 app.get('/logout', function(req, res) {
+      res.redirect('/../login.html');
     req.logout();
-    res.redirect('/');
+
 });
 
 };
@@ -183,6 +194,31 @@ function isLoggedIn(req, res, next) {
 
 // if user is authenticated in the session, carry on
 if (req.isAuthenticated()){
+  if(req.user.twitter.name != undefined){
+
+    acc_email = req.user.twitter.email;
+    acc_role = req.user.twitter.role;
+    acc_name = req.user.twitter.name;
+  }
+  else if(req.user.facebook.email != undefined){
+    acc_email = req.user.facebook.email;
+    acc_role = req.user.facebook.role;
+        acc_name = req.user.facebook.name;
+  }
+  else if(req.user.google.email != undefined){
+    acc_email = req.user.google.email;
+    acc_role = req.user.google.role;
+        acc_name = req.user.google.name;
+  }
+  else if(req.user.linkedin.email != undefined){
+  acc_email =req.user.linkedin.email;
+  acc_role = req.user.linkedin.role;
+      acc_name = req.user.linkedin.name;
+  }
+  if(acc_role == 'user'){
+    acc_url = '/../options.html';
+  }
+  else acc_url = '/../approval.html';
 
     return next();
 }

@@ -92,7 +92,7 @@ function(token, refreshToken, profile, done) {
 
             // find the user in the database based on their facebook id
             User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
-
+    
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
                 if (err)
@@ -157,8 +157,9 @@ function(token, refreshToken, profile, done) {
 
                     // set all of the user data that we need
                     newUser.twitter.id          = profile.id;
+                    newUser.twitter.name    = profile.username;
                     newUser.twitter.token       = token;
-                    newUser.twitter.username    = profile.username;
+            //        newUser.twitter.email    = profile.emails[0].value;
                     newUser.twitter.displayName = profile.displayName;
                     newUser.twitter.role = 'user';
                     // save our user into the database

@@ -137,7 +137,7 @@ angular.module('admin_forms', [])
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
 
-$scope.getList = function(email) {
+$scope.getList = function() {
 
 admin_factory.get_form()
 .success(function(data){

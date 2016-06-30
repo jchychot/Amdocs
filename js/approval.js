@@ -1,7 +1,11 @@
 
 $( document ).ready(function() {
 
-checkLoginState();
+
+  var scope = angular.element(document.getElementById("admin")).scope();
+    scope.$apply(function () {
+    scope.getList();
+    });
 
  });
 
@@ -40,11 +44,7 @@ var email2 = '';
     $('#loginBtn').hide();
       FB.api('/me', { locale: 'en_US', fields: 'name, email' },function(response) {
       document.getElementById('username').innerHTML = response.name;
-        email2 = response.email;
-        var scope = angular.element(document.getElementById("admin")).scope();
-          scope.$apply(function () {
-          scope.getList(email2);
-          });
+
        });
        FB.api("/me/picture?width=200&redirect=0&type=normal&height=200", function (response) {
           if (response && !response.error) {
@@ -69,28 +69,5 @@ var email2 = '';
   }
 }
 
- function logOut() {
-   FB.getLoginStatus(function(response) {
-        if(response.status === 'connected'){
-          FB.logout(function(response) {
-           console.log('logout :: ', response);
-           //Removing access token form localStorage.
-           $('#loginBtn').show();
-           $('#logoutBtn').hide();
-           window.top.location = "login.html";
-
-          });
-        }
-        else{
-          var auth2 = gapi.auth2.getAuthInstance();
-          auth2.signOut().then(function () {
-            console.log('User signed out.');
-          });
-        }
-
-
-   });
-
-}
 
  fbAsyncInit();

@@ -78,7 +78,7 @@ margin-top: 10px;
             <a id="username">--</a>
           </li>
           <li>
-            <a id="logoutBtn" ng-click="logout()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+            <a id="logoutBtn" ng-click="log_out()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
     <li class="active">
       <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -121,8 +121,9 @@ margin-top: 10px;
 angular.module('user_forms', [])
 .factory('user_factory', ['$http', '$q', function($http, $q){
   return{
+
     get_form: function(){
-        return $http.get('/api/rfc');
+        return $http.get('/options');
     },
     delete_form: function(subject){
       return $http.delete('/api/rfc',subject);
@@ -135,26 +136,20 @@ angular.module('user_forms', [])
     }
   }
 }]);
-// filter
-angular.module('Ufilte', [])
-.filter('user_filter', function(){
-  return function(rfcs){
-    return rfcs.filter(function(rfc){
-      return rfc.email = email2;
-    });
-  };
-});
 // controller
 angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 
-$scope.logout = function(){
+$scope.log_out = function(){
+
   user_factory.log_out();
+  window.top.location = "login.html"
 };
 
-$scope.getList = function(email) {
+$scope.getList = function() {
 
-user_factory.get_form_email(email)
+//user_factory.get_form_email(email)
+user_factory.get_form()
 .success(function(data){
   $scope.rfcs = data;
 

@@ -14,7 +14,8 @@ var userSchema = mongoose.Schema({
         id           : String,
         token        : String,
         displayName  : String,
-        username     : String,
+        name         : String,
+        email        : String,
         role         : String
     },
     google           : {
