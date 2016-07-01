@@ -47,8 +47,8 @@ margin-top: 10px;
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="https://connect.facebook.net/en_US/all.js"></script>
-<script src="js/glogin.js"></script>
-<script src="js/approval.js"></script>
+
+
 <body ng-controller="admin_controller" id="admin">
 <header class= "navbar navbar-inverse navbar-fixed-top">
   <div class="container">
@@ -106,15 +106,29 @@ margin-top: 10px;
          <td>{{rfc.creation_date}}</td>
          <td>{{rfc.name}}</td>
             <td>{{rfc.email}}</td>
-            <td id="actions">
-              <button type="submit" class="btn btn-success" ng-click="approve(rfc._id)">Approve</button>
-              <button type="submit" class="btn btn-danger" ng-click="reject(rfc._id)">Reject</button>
+            <td id="{{$index}}">
+              <img id="tick" src="images/tick.jpg" alt="" width="30" height="30">
+              <img id="cross" src="images/x.png" alt="" width="30" height="30">
+              <button type="submit" class="btn btn-success" ng-click="approve(rfc._id, $index)">Approve</button>
+              <button type="submit" class="btn btn-danger" ng-click="reject(rfc._id, $index)">Reject</button>
             </td>
        </tr>
      </tbody>
    </table>
 </div>
+<script>
 
+$( document ).ready(function() {
+
+  var scope = angular.element(document.getElementById("admin")).scope();
+    scope.$apply(function () {
+    scope.getList();
+    });
+
+ });
+
+
+</script>
 <script>
 // web services
 angular.module('admin_forms', [])
@@ -146,25 +160,26 @@ admin_factory.get_form()
 });
 };
 
-$scope.approve = function(id){
+$scope.approve = function(id, id2){
 
   // admin_factory.changeStatus(id, {"status" : 'approved'})
 
 admin_factory.changeStatus(id, {"status" : 'approved'})
 .success(function(obj){
- $('#actions').hide();
- $('#status').show();
+var temp = id2;
+ $('#'+ id2).hide();
+ $('#tick').show();
 });
 
 };
-$scope.reject = function(id){
+$scope.reject = function(id, id2){
 
   admin_factory.changeStatus(id, {"status" : 'rejected'})
   .success(function(obj){
-   $('#actions').hide();
-   $('#status').show();
+   $('#id2').hide();
+   $('#cross').show();
   });
-
+ $('#'+ id2).hide();
 
 };
 
