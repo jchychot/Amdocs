@@ -6,13 +6,22 @@
   var acc_name = '';
 module.exports = function(app, passport){
 // routes for rfc app
-  app.get('/api/rfc', function(req,res){
+  app.get('/api/rfc', isLoggedIn,function(req,res){
+    // use facebook email by default
+
+
       rfc.find(function(err,rfc){
-          if(err){
+        if(acc_role=='user'){
+          res.json(rfc);
+        }
+        else
+            {
             res.send(err);
           }
-        res.json(rfc);
+
       });
+
+
   } );
 
   app.get('/api/rfc/:_id', function(req, res){
@@ -102,7 +111,8 @@ module.exports = function(app, passport){
           ticket_num: req.body.ticket_num,
           responsible_teams: req.body.rt,
           notify_teams: req.body.nt,
-          status: req.body.status
+          status: req.body.status,
+          creation_date: req.body.time
       }, function(err, rfc){
           if(err)
             res.send(err);
@@ -142,12 +152,18 @@ app.get('/options', isLoggedIn, function(req, res) {
 });
 app.get('/approval', isLoggedIn, function(req, res) {
 // use facebook email by default
+if(acc_role != 'user'){
+  console.log(acc_role);
   rfc.find(function(err,rfc){
       if(err){
         res.send(err);
       }
     res.json(rfc);
   });
+}
+else {
+  res.send('you are not an admin!');
+}
 });
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile','email'] }));
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
@@ -182,8 +198,12 @@ app.get('/auth/twitter/callback',
 
 // route for logging out
 app.get('/logout', function(req, res) {
-      res.redirect('/../login.html');
-    req.logout();
+  req.session.destroy(function (err) {
+  res.redirect('/'); //Inside a callback… bulletproof!
+});
+    // req.logout();
+    //   res.redirect('/../login.html');
+
 
 });
 

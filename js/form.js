@@ -18,48 +18,13 @@ return{
 get_user : function() {
     return $http.get('/api/user');
 },
-  modify_form : function(data){
-    return $http.put('/api/rfc', data);
+  modify_form : function(id,data){
+    return $http.put('/api/rfc/'+id, data);
   },
   getCC : function(id){
     return $http.get('/api/rfc/'+ id);
   },
 
-
-        initialize: function() {
-            //initialize OAuth.io with public key of the application
-            OAuth.initialize('19gVB-kbrzsJWQs5o7Ha2LIeX4I', {
-                cache: true
-            });
-            //try to create an authorization result when the page loads,
-            // this means a returning user won't have to click the twitter button again
-            authorizationResult = OAuth.create("twitter");
-        },
-
-        isReady: function() {
-            return (authorizationResult);
-        },
-
-        connectTwitter: function() {
-            var deferred = $q.defer();
-            OAuth.popup("twitter", {
-                cache: true
-            }, function(error, result) {
-                // cache means to execute the callback if the tokens are already present
-                if (!error) {
-                    authorizationResult = result;
-                    deferred.resolve();
-                } else {
-                    //do something if there's an error
-
-                }
-            });
-            return deferred.promise;
-        },
-        clearCache: function() {
-            OAuth.clearCache('twitter');
-            authorizationResult = false;
-        }
 }
 }]);
 
@@ -68,29 +33,38 @@ angular.module('rfcController',[])
 
 .controller('mainController', ['$scope', '$http','RFC_factory','$q',  function($scope, $http, RFC_factory,$q){
 $scope.request = {};
+$scope.request.time = new Date();
 $scope.request.status = 'pending';
 $scope.facebook = {};
-//initialize twitter
-RFC_factory.initialize();
-//RFC_factory.initialize();
-  // create entry
-$scope.fb_login = function(id, name, email){
-  $scope.facebook.fbId = id;
-  $scope.facebook.name = name;
-  $scope.facebook.fbemail = email;
-  var json = JSON.stringify($scope.facebook,null, 4);
-  console.log(json);
-  RFC_factory.create_user(json)
-  .success(function(){
-    $scope.facebook = {};
-  });
 
-};
+  $scope.modifyRFC = function(id){
+var json = JSON.stringify($scope.request,null, 4);
+    RFC_factory.modify_form(id, json)
+    .success(function(data){
 
-  $scope.createRFC = function(){
+          $scope.request = {};
 
+      });
+  };
+  $scope.createRFC = function(id){
+    if(id != null){
+      $scope.request.impact = $('input[name="optradio"]:checked').val();
+      $scope.request.result = $('input[name="optradio1"]:checked').val();
+      $scope.request.implemented = $('input[name="optradio2"]:checked').val();
+      $scope.request.duration = $('input[name="optradio3"]:checked').val();
+      $scope.request.hard_soft = $('input[name="optradio4"]:checked').val();
+      $scope.request.outage = $('input[name="optradio5"]:checked').val();
+      $scope.request.test = $('input[name="optradio6"]:checked').val();
+      $scope.request.SLA = $('input[name="optradio7"]:checked').val();
+      var json = JSON.stringify($scope.request,null, 4);
+          RFC_factory.modify_form(id, json)
+          .success(function(data){
+                $scope.request = {};
+            });
+  window.top.location = "options.html";
+    }
+else{
   $scope.request.name= $('#username').html();
-  $scope.request.email = email2;
   $scope.request.impact = $('input[name="optradio"]:checked').val();
   $scope.request.result = $('input[name="optradio1"]:checked').val();
   $scope.request.implemented = $('input[name="optradio2"]:checked').val();
@@ -105,7 +79,7 @@ $scope.fb_login = function(id, name, email){
   $scope.request.nt= $( "#t option:selected" ).map(function(){ return $(this).text();}).get().join();
   $scope.request.categories = $( "#c option:selected" ).map(function(){ return $(this).text();}).get().join();
 
-  if($scope.request.subject != undefined){
+  if($scope.request.subject != ''){
 
 var json = JSON.stringify($scope.request,null, 4);
 
@@ -137,7 +111,7 @@ var json = JSON.stringify($scope.request,null, 4);
       });
 
     }
-
+}
   };
   $scope.t_login = function(){
       RFC_factory.connectTwitter()
@@ -155,10 +129,64 @@ var json = JSON.stringify($scope.request,null, 4);
     .then(function(obj){
 
 $scope.request.subject = obj.data[0].subject;
-$scope.request.impact = obj.data[0].impact;
 $scope.request.result = obj.data[0].result;
 $scope.request.outage = obj.data[0].subject;
 $scope.request.test = obj.data[0].test;
+$scope.request.benefits = obj.data[0].benefits;
+$scope.request.risks = obj.data[0].risks;
+// 0
+if(obj.data[0].impact == 'Low'){
+    $("[value=Low][name=optradio]").attr('checked', true);
+}
+else if(obj.data[0].impact == 'Medium'){
+  $("[value=Medium][name=optradio]").attr('checked', true);
+}
+else if(obj.data[0].impact == 'High'){
+  $("[value=High][name=optradio]").attr('checked', true);
+}
+// 1
+if(obj.data[0].result == 'Yes'){
+    $("[value=Yes][name=optradio1]").attr('checked', true);
+}
+else $("[value=No][name=optradio1]").attr('checked', true);
+if(obj.data[0].implemented == 'Yes'){
+    $("[value=Yes][name=optradio2]").attr('checked', true);
+}
+else $("[value=No][name=optradio2]").attr('checked', true);
+
+if(obj.data[0].duration == 'Short'){
+    $("[value=Low][name=optradio]").attr('checked', true);
+}
+else if(obj.data[0].duration == 'Standard'){
+  $("[value=Medium][name=optradio]").attr('checked', true);
+}
+else if(obj.data[0].duration == 'Long'){
+  $("[value=High][name=optradio]").attr('checked', true);
+}
+if(obj.data[0].outage == 'Yes'){
+    $("[value=Yes][name=optradio5]").attr('checked', true);
+}
+else $("[value=No][name=optradio5]").attr('checked', true);
+if(obj.data[0].test == 'Yes'){
+    $("[value=Yes][name=optradio6]").attr('checked', true);
+}
+else $("[value=No][name=optradio6]").attr('checked', true);
+if(obj.data[0].SLA == 'Yes'){
+    $("[value=Yes][name=optradio7]").attr('checked', true);
+}
+else $("[value=No][name=optradio7]").attr('checked', true);
+$scope.request.host = obj.data[0].host_name;
+$scope.request.envir = obj.data[0].environment;
+$scope.request.net = obj.data[0].affected_network;
+if(obj.data[0].hard_soft == 'Software'){
+  $("[value=Software]").attr('checked', true);
+}
+else $("[value=Hardware]").attr('checked', true);
+$scope.request.plan = obj.data[0].implemented;
+$scope.request.plan2 = obj.data[0].back_out_plan;
+$scope.request.pi = obj.data[0].process;
+$scope.request.ticket = obj.data[0].ticket_num;
+$scope.request.mr = obj.data[0].event;
 $scope.request.descriptions= obj.data[0].descriptions;
 $scope.request.start_date = obj.data[0].start_date ;
 $scope.request.end_date = obj.data[0].end_date;

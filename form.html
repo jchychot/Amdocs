@@ -54,7 +54,7 @@
                 <a id="pic"><img src="images/user.jpg" height="20" width="20"></a>
               </li>
               <li>
-                <a id="username" ng-click="t_login()"></a>
+                <a id="username"></a>
               </li>
         <li class="active">
           <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
@@ -159,9 +159,9 @@
         <div>
            <label for="sel1">Duration Required</label>
          </div>
-         <label class="radio-inline"><input type="radio" name="optradio3" value="Standard">Short</label>
-         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">Standard</label>
-         <label class="radio-inline"><input type="radio" name="optradio3"value="Something">Long</label>
+         <label class="radio-inline"><input type="radio" name="optradio3" value="Short">Short</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Standard">Standard</label>
+         <label class="radio-inline"><input type="radio" name="optradio3"value="Long">Long</label>
          <div>
             <label for="sel1">Category of Change</label>
           </div>
@@ -248,7 +248,7 @@
     <div id="todo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createRFC()">Submit</button>
+					<button type="submit" class="btn btn-primary btn-lg" onclick="changeOrMod()">Submit</button>
 				</form>
 			</div>
 		</div>
@@ -267,7 +267,35 @@ $( document ).ready(function() {
     scope.getCC(id);
     });
   }
+  else{
+    toastr.info('New Submission','Status',{
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    });
+
+  }
  });
+function changeOrMod(){
+    var id = getParameterByName('id');
+  var scope = angular.element(document.getElementById("page-top")).scope();
+    scope.$apply(function () {
+    scope.createRFC(id);
+    });
+
+};
 
 // get the url params by name
 function getParameterByName(name, url) {
