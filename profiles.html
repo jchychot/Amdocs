@@ -76,7 +76,7 @@ margin-top: 10px;
       <a href="approval.html"> <i class="fa fa-fw fa-tasks"></i> Approve/Schedule CCs</a>
     </li>
     <li>
-      <a href="profiles.html"> <i class="fa fa-fw fa-male"></i> Manage Users</a>
+      <a target="gae-init-docs"> <i class="fa fa-fw fa-male"></i> Manage Users</a>
     </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -99,40 +99,22 @@ margin-top: 10px;
 
 <div class="container" id="list">
   <a href="form.html" type="button" class="btn btn-primary test">
-    Create New Form
+    +Add new user
   </a>
-  <button type="button" class="btn btn-warning test" ng-click="mod_form()">
-    Modify Existing Forms
-  </button>
-  <button type="button" class="btn btn-danger test">
-    Delete Forms
-  </button>
-  <table class="table table-hover">
-     <thead>
-       <tr>
-         <th>Subject</th>
-         <th>Creation Date</th>
-         <th>Status</th>
-       </tr>
-     </thead>
-     <tbody>
-      <tr ng-repeat="rfc in rfcs" ng-class="{selected : rfc._id === ids }">
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.subject}}</td>
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.creation_date}}</td>
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.status}}</td>
-       </tr>
-     </tbody>
-   </table>
+      <div ng-repeat="user in users" class="col-md-4">
+         <img ng-src="{{user.facebook.image}}" />
+<a>{{user}}</a>
+<a>{{user.facebook.email}}</a>
 </div>
-
+</div>
 <script>
 // web services
 angular.module('user_forms', [])
 .factory('user_factory', ['$http', '$q', function($http, $q){
   return{
 
-    get_form: function(){
-        return $http.get('/options');
+    get_user: function(){
+        return $http.get('/api/user');
     },
     delete_form: function(subject){
       return $http.delete('/api/rfc',subject);
@@ -149,6 +131,14 @@ angular.module('user_forms', [])
 angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 $scope.ids = null;
+$scope.ac = [] ;
+user_factory.get_user()
+.success(function(data){
+  $scope.users = data;
+  $scope.ac = Object.keys(data[1]);
+  console.log($scope.ac[2]);
+});
+
 $scope.getId = function(id){
   $scope.ids = id;
 };
@@ -156,22 +146,6 @@ $scope.log_out = function(){
 
   user_factory.log_out();
   window.top.location = "login.html"
-};
-
-$scope.getList = function() {
-
-//user_factory.get_form_email(email)
-user_factory.get_form()
-.success(function(data){
-  $scope.rfcs = data;
-
-});
-};
-
-$scope.mod_form = function() {
-
-   window.top.location = "form.html"+ '?id='+ $scope.ids;
-
 };
 
 }]);

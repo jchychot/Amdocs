@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String,
         role         : String,
+        image        : String
     },
     twitter          : {
         id           : String,
@@ -16,21 +17,24 @@ var userSchema = mongoose.Schema({
         displayName  : String,
         name         : String,
         email        : String,
-        role         : String
+        role         : String,
+        image        : String
     },
     google           : {
         id           : String,
         token        : String,
         email        : String,
         name         : String,
-        role         : String
+        role         : String,
+        image        : String
     },
     linkedin          : {
         id           : String,
         token        : String,
         name         : String,
         email        : String,
-        role         : String
+        role         : String,
+        image        : String
     }
 
 });

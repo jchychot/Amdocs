@@ -17,8 +17,8 @@
     "passport" : "^0.1.17",
     "passport-facebook" : "^1.0.2",
     "passport-twitter" : "^1.0.2",
-    "passport-linkedin" : "^1.0.0",
-    "passport-google-oauth" : "^0.1.5",
+    "passport-linkedin-oauth2" : ">= 0.0.0",
+    "passport-google-oauth2" : ">= 0.0.0",
     "connect-flash" : "^0.1.1",
     "bcrypt-nodejs" : "latest",
     "express-session": "^1.0.0"

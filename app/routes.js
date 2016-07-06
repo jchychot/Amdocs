@@ -51,7 +51,7 @@ module.exports = function(app, passport){
   });
 // get users
   app.get('/api/user', function(req,res){
-      rfc.find(function(err,rfc){
+      User.find(function(err,rfc){
           if(err){
             res.send(err);
           }
@@ -166,8 +166,8 @@ else {
 }
 });
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile','email'] }));
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/google', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+app.get('/auth/twitter', passport.authenticate('twitter',  { scope : ['email'] }));
 app.get('/auth/linkedin',passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
 // handle the callback after facebook has authenticated the user
 
@@ -198,6 +198,7 @@ app.get('/auth/twitter/callback',
 
 // route for logging out
 app.get('/logout', function(req, res) {
+
   req.session.destroy(function (err) {
   res.redirect('/'); //Inside a callback… bulletproof!
 });
