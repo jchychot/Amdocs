@@ -39,7 +39,7 @@ function(token, refreshToken, profile, done) {
     process.nextTick(function() {
 
         // find the user in the database based on their facebook id
-        User.findOne({ 'linkedin.id' : profile.id }, function(err, user) {
+        User.findOne({ 'profile_id' : profile.id }, function(err, user) {
 
             // if there is an error, stop everything and return that
             // ie an error connecting to the database
@@ -51,12 +51,13 @@ function(token, refreshToken, profile, done) {
             } else {
 
                 var newUser            = new User();
-                newUser.linkedin.id    = profile.id; // set the users facebook id
-                newUser.linkedin.token = token;
-                newUser.linkedin.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                newUser.linkedin.email = profile.emails[0].value;
-                newUser.linkedin.image = profile.photos[0].value;
-                newUser.linkedin.role = 'user';
+                newUser.profile_id    = profile.id; // set the users facebook id
+                newUser.token = token;
+                newUser.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                newUser.email = profile.emails[0].value;
+                newUser.image = profile.photos[0].value;
+                newUser.role = 'user';
+                newUser.provider = profile.provider;
                 // save our user to the database
                 newUser.save(function(err) {
                     if (err)
@@ -92,7 +93,7 @@ function(token, refreshToken, profile, done) {
         process.nextTick(function() {
 
             // find the user in the database based on their facebook id
-            User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
+            User.findOne({ 'profile_id' : profile.id }, function(err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -107,12 +108,13 @@ function(token, refreshToken, profile, done) {
                     var newUser            = new User();
 
                     // set all of the facebook information in our user model
-                    newUser.facebook.id    = profile.id; // set the users facebook id
-                    newUser.facebook.token = token; // we will save the token that facebook provides to the user
-                    newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
-                    newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-                    newUser.facebook.image = profile.photos[0].value;
-                    newUser.facebook.role = 'user';
+                    newUser.profile_id    = profile.id; // set the users facebook id
+                    newUser.token = token; // we will save the token that facebook provides to the user
+                    newUser.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+                    newUser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    newUser.image = profile.photos[0].value;
+                    newUser.role = 'user';
+                    newUser.provider = profile.provider;
                     // save our user to the database
                     newUser.save(function(err) {
                         if (err)
@@ -143,7 +145,7 @@ function(token, refreshToken, profile, done) {
     // User.findOne won't fire until we have all our data back from Twitter
         process.nextTick(function() {
 
-            User.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+            User.findOne({ 'profile_id' : profile.id }, function(err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -158,13 +160,13 @@ function(token, refreshToken, profile, done) {
                     var newUser                 = new User();
 
                     // set all of the user data that we need
-                    newUser.twitter.id          = profile.id;
-                    newUser.twitter.name    = profile.username;
-                    newUser.twitter.token       = token;
+                    newUser.profile_id          = profile.id;
+                    newUser.name    = profile.username;
+                    newUser.token       = token;
               //     newUser.twitter.email    = profile.emails[0].value;
-                    newUser.twitter.displayName = profile.displayName;
-                    newUser.twitter.image = profile.photos[0].value;
-                    newUser.twitter.role = 'user';
+                    newUser.image = profile.photos[0].value;
+                    newUser.role = 'user';
+                    newUser.provider = profile.provider;
                     // save our user into the database
                     newUser.save(function(err) {
                         if (err)
@@ -195,7 +197,7 @@ function(token, refreshToken, profile, done) {
            process.nextTick(function() {
 
                // try to find the user based on their google id
-               User.findOne({ 'google.id' : profile.id }, function(err, user) {
+               User.findOne({ 'profile_id' : profile.id }, function(err, user) {
                    if (err)
                        return done(err);
 
@@ -207,13 +209,13 @@ function(token, refreshToken, profile, done) {
                        // if the user isnt in our database, create a new user
                        var newUser          = new User();
 
-                       newUser.google.id    = profile.id;
-                       newUser.google.token = token;
-                       newUser.google.name  = profile.displayName;
-                       newUser.google.email = profile.emails[0].value; // pull the first email
-                       newUser.google.role = 'user';
-
-                       newUser.google.image = profile.photos[0].value;
+                       newUser.id    = profile.id;
+                       newUser.token = token;
+                       newUser.name  = profile.displayName;
+                       newUser.email = profile.emails[0].value; // pull the first email
+                       newUser.role = 'user';
+                       newUser.provider = profile.provider;
+                       newUser.image = profile.photos[0].value;
                        // save the user
                        newUser.save(function(err) {
                            if (err)

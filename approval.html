@@ -162,8 +162,6 @@ admin_factory.get_form()
 
 $scope.approve = function(id, id2){
 
-  // admin_factory.changeStatus(id, {"status" : 'approved'})
-
 admin_factory.changeStatus(id, {"status" : 'approved'})
 .success(function(obj){
 var temp = id2;
