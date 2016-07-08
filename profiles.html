@@ -118,7 +118,7 @@ label{
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
-         <img ng-src="{{user.image}}" style="width:150px;height:150px" />
+         <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
 <p>{{user.name}}</p>
 
 </a>
@@ -134,7 +134,7 @@ label{
 
 </div>
 <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <form method="post" action="/api/user">
           <div>
@@ -155,7 +155,11 @@ label{
             <label for="log">make administrator</label>
             <input type="checkbox" name="login" id="log" value="1" ng-model="user.admin">
                   </div>
-            <input type="submit" data-inline="true" value="+ Create" ng-click="createUser()" data-dismiss="modal">
+            <a type="submit" data-inline="true" ng-click="createUser()" data-dismiss="modal" class="btn btn-block btn-social btn-dropbox">
+              <span class="fa fa-plus-square"></span> Create User
+            </a>
+            <p id="exist">this user already exist</p>
+            <p id="fill">please fill in the email field</p>
           </div>
         </form>
       </div>
@@ -194,7 +198,6 @@ $scope.user = {};
 user_factory.get_user()
 .success(function(data){
   $scope.users = data;
-
 for( var i = 0 ; i< $scope.users.length; i++ ){
   if($scope.users[i].provider == 'twitter'){
   $scope.users[i].icon = 'fa fa-twitter';
@@ -209,12 +212,13 @@ else if($scope.users[i].provider == 'google'){
   $scope.users[i].icon = 'fa fa-google';
 }
 else{
-//$scope.users[i].icon =   'fa fa-fw fa-comment';
+$scope.users[i].icon =   'fa fa-square-o';
 }
+
 }
 });
 $scope.createUser = function(){
-  console.log($scope.user.admin);
+
   if($scope.user.admin){
   $scope.user.role = 'admin';
 }
@@ -222,13 +226,16 @@ else{
 $scope.user.role = 'user';
 }
   var json = JSON.stringify($scope.user,null, 4);
+
+
   user_factory.create_user(json)
   .success(function(data){
-
       $scope.user = {};
 
   });
 window.top.location = "profiles.html";
+
+
 }
 $scope.getId = function(id){
   $scope.ids = id;
@@ -246,8 +253,8 @@ angular.module('listapp', ['user_control', 'user_forms', 'ngRoute']);
 </script>
 <script>
 $( document ).ready(function() {
-
-
+$('#exist').hide();
+$('#fill').hide();
  });
 
 </script>

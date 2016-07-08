@@ -97,6 +97,7 @@ margin-top: 10px;
          <th>Creation Date</th>
           <th>Creator</th>
           <th>Contacts</th>
+          <th>Current Status</th>
          <th>Actions</th>
        </tr>
      </thead>
@@ -106,12 +107,14 @@ margin-top: 10px;
          <td>{{rfc.creation_date}}</td>
          <td>{{rfc.name}}</td>
             <td>{{rfc.email}}</td>
-            <td id="{{$index}}">
-              <img id="tick" src="images/tick.jpg" alt="" width="30" height="30">
-              <img id="cross" src="images/x.png" alt="" width="30" height="30">
+            <td id="{{$index}}">{{rfc.status}}</td>
+            <td>
               <button type="submit" class="btn btn-success" ng-click="approve(rfc._id, $index)">Approve</button>
               <button type="submit" class="btn btn-danger" ng-click="reject(rfc._id, $index)">Reject</button>
+              <a href="approval.html" type="submit" class="btn btn-info">Confirm</a>
+              <a href="approval.html" type="submit" class="btn btn-warning">View</a>
             </td>
+
        </tr>
      </tbody>
    </table>
@@ -119,7 +122,9 @@ margin-top: 10px;
 <script>
 
 $( document ).ready(function() {
-
+  //document.getElementById("tick").style.display = "none";
+$('#tick').hide();
+$('#cross').hide();
   var scope = angular.element(document.getElementById("admin")).scope();
     scope.$apply(function () {
     scope.getList();
@@ -151,6 +156,8 @@ angular.module('admin_forms', [])
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
 
+
+
 $scope.getList = function() {
 
 admin_factory.get_form()
@@ -164,9 +171,7 @@ $scope.approve = function(id, id2){
 
 admin_factory.changeStatus(id, {"status" : 'approved'})
 .success(function(obj){
-var temp = id2;
- $('#'+ id2).hide();
- $('#tick').show();
+document.getElementById(id2).innerHTML = "approved";
 });
 
 };
@@ -174,10 +179,9 @@ $scope.reject = function(id, id2){
 
   admin_factory.changeStatus(id, {"status" : 'rejected'})
   .success(function(obj){
-   $('#id2').hide();
-   $('#cross').show();
+document.getElementById(id2).innerHTML = "rejected";
   });
- $('#'+ id2).hide();
+
 
 };
 

@@ -11,7 +11,7 @@ module.exports = function(app, passport){
 
 
       rfc.find(function(err,rfc){
-        if(acc_role=='user'){
+        if(req.user.role=='user'){
           res.json(rfc);
         }
         else
@@ -60,7 +60,7 @@ module.exports = function(app, passport){
   } );
 // create user
   app.post('/api/user', function(req,res){
-    User.findOne({'name' : req.body.name}, function(err, user) {
+    User.findOne({'email' : req.body.email}, function(err, user) {
           if (user) {
               return;
             }
@@ -85,8 +85,8 @@ module.exports = function(app, passport){
           descriptions: req.body.descriptions,
           start_date: req.body.start_date,
           end_date: req.body.end_date,
-          name: acc_name,
-          email: acc_email,
+          name: req.user.name,
+          email: req.user.email,
           impact: req.body.impact,
           benefits: req.body.benefits,
           risks: req.body.risks,

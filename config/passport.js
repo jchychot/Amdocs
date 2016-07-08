@@ -1,9 +1,11 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var User       = require('../app/model/user');
-var TwitterStrategy  = require('passport-twitter').Strategy;
+var TwitterStrategy  = require('passport-twitter-email').Strategy;
 var LinkedInStrategy  = require('passport-linkedin-oauth2').Strategy;
 var configAuth = require('./auth');
+
+
 
 module.exports = function(passport) {
 
@@ -39,7 +41,7 @@ function(token, refreshToken, profile, done) {
     process.nextTick(function() {
 
         // find the user in the database based on their facebook id
-        User.findOne({ 'profile_id' : profile.id }, function(err, user) {
+        User.findOne({ 'email' : profile.emails[0].value }, function(err, user) {
 
             // if there is an error, stop everything and return that
             // ie an error connecting to the database
@@ -47,9 +49,18 @@ function(token, refreshToken, profile, done) {
                 return done(err);
 
             if (user) {
-                return done(null, user); // user found, return that user
+              if(user.provider == undefined){
+                user.provider = profile.provider;
+                user.image = profile.photos[0].value;
+                user.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                user.save(function(err) {
+                    if (err)
+                        throw err;
+                });
+              }
+              return done(null, user);
             } else {
-
+              //  creatUser(profile);
                 var newUser            = new User();
                 newUser.profile_id    = profile.id; // set the users facebook id
                 newUser.token = token;
@@ -93,7 +104,7 @@ function(token, refreshToken, profile, done) {
         process.nextTick(function() {
 
             // find the user in the database based on their facebook id
-            User.findOne({ 'profile_id' : profile.id }, function(err, user) {
+            User.findOne({ 'email' : profile.emails[0].value }, function(err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -102,7 +113,16 @@ function(token, refreshToken, profile, done) {
 
                 // if the user is found, then log them in
                 if (user) {
-                    return done(null, user); // user found, return that user
+                    if(user.provider == undefined){
+                      user.provider = profile.provider;
+                      user.image = profile.photos[0].value;
+                      user.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                      user.save(function(err) {
+                          if (err)
+                              throw err;
+                      });
+                    }
+                    return done(null, user);
                 } else {
                     // if there is no user found with that facebook id, create them
                     var newUser            = new User();
@@ -136,16 +156,18 @@ function(token, refreshToken, profile, done) {
 
         consumerKey     : configAuth.twitterAuth.consumerKey,
         consumerSecret  : configAuth.twitterAuth.consumerSecret,
-        callbackURL     : configAuth.twitterAuth.callbackURL
+        userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+        callbackURL     : configAuth.twitterAuth.callbackURL,
+
 
     },
     function(token, tokenSecret, profile, done) {
-
+        console.log(profile);
         // make the code asynchronous
     // User.findOne won't fire until we have all our data back from Twitter
         process.nextTick(function() {
 
-            User.findOne({ 'profile_id' : profile.id }, function(err, user) {
+            User.findOne({ 'name': profile.username }, function(err, user) {
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -154,7 +176,16 @@ function(token, refreshToken, profile, done) {
 
                 // if the user is found then log them in
                 if (user) {
-                    return done(null, user); // user found, return that user
+                  if(user.provider == undefined){
+                    user.provider = profile.provider;
+                    user.image = profile.photos[0].value;
+                    user.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                    user.save(function(err) {
+                        if (err)
+                            throw err;
+                    });
+                  }
+                  return done(null, user);
                 } else {
                     // if there is no user, create them
                     var newUser                 = new User();
@@ -163,7 +194,7 @@ function(token, refreshToken, profile, done) {
                     newUser.profile_id          = profile.id;
                     newUser.name    = profile.username;
                     newUser.token       = token;
-              //     newUser.twitter.email    = profile.emails[0].value;
+                  // newUser.email    = profile.emails[0].value;
                     newUser.image = profile.photos[0].value;
                     newUser.role = 'user';
                     newUser.provider = profile.provider;
@@ -197,14 +228,22 @@ function(token, refreshToken, profile, done) {
            process.nextTick(function() {
 
                // try to find the user based on their google id
-               User.findOne({ 'profile_id' : profile.id }, function(err, user) {
+               User.findOne({ 'email' : profile.emails[0].value }, function(err, user) {
                    if (err)
                        return done(err);
 
                    if (user) {
 
-                       // if a user is found, log them in
-                       return done(null, user);
+                     if(user.provider == undefined){
+                       user.provider = profile.provider;
+                       user.image = profile.photos[0].value;
+                       user.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                       user.save(function(err) {
+                           if (err)
+                               throw err;
+                       });
+                     }
+                     return done(null, user);
                    } else {
                        // if the user isnt in our database, create a new user
                        var newUser          = new User();
