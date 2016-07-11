@@ -11,7 +11,7 @@ module.exports = function(app, passport){
 
 
       rfc.find(function(err,rfc){
-        if(req.user.role=='user'){
+        if(req.user.role=='admin'){
           res.json(rfc);
         }
         else
@@ -149,8 +149,8 @@ app.get('/options', isLoggedIn, function(req, res) {
 });
 app.get('/approval', isLoggedIn, function(req, res) {
 // use facebook email by default
-if(acc_role != 'user'){
-  console.log(acc_role);
+if(req.user.role == 'admin'){
+  console.log(req.user.role );
   rfc.find(function(err,rfc){
       if(err){
         res.send(err);

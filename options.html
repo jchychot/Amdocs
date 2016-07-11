@@ -12,8 +12,12 @@
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-social.css" rel="stylesheet">
+<link href="css/options.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 <!-- Custom styles for this template -->
 
 <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
@@ -44,6 +48,9 @@ margin-top: 10px;
 }
 .selected{
   background-color: yellow;
+}
+input{
+  margin-right: 30px;
 }
 </style>
 
@@ -98,15 +105,26 @@ margin-top: 10px;
   </header>
 
 <div class="container" id="list">
-  <a href="form.html" type="button" class="btn btn-primary test">
-    Create New Form
-  </a>
+  <div class="dropdown">
+    <button class="dropbtn btn btn-info test"><i class="fa fa-fw fa-terminal"></i>Create form</button>
+    <div id="myDropdown" class="dropdown-content">
+      <a href="form.html" type="button"><i class="fa fa-fw fa-plus-square-o"></i>
+        new submition
+      </a>
+  <a data-toggle="modal" data-target="#myModal2"><i class="fa fa-fw fa-history"></i>clone from history</a>
+    </div>
+  </div>
+
+
+
+
   <button type="button" class="btn btn-warning test" ng-click="mod_form()">
-    Modify Existing Forms
+  <i class="fa fa-fw fa-pencil-square-o"></i>  Modify Existing Forms
   </button>
   <button type="button" class="btn btn-danger test">
-    Delete Forms
+  <i class="fa fa-fw fa-times"></i>  Delete Forms
   </button>
+
   <table class="table table-hover">
      <thead>
        <tr>
@@ -123,6 +141,36 @@ margin-top: 10px;
        </tr>
      </tbody>
    </table>
+   <div class="modal fade" id="myModal2" role="dialog">
+       <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+           <div id="notifications"></div>
+             <div class="page-header">
+               <h1>Old forms</h1>
+
+             </div>
+                <p><input style="float:right" placeholder="Search" ng-model="search"/></p>
+           <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Subject</th>
+                  <th>Creation Date</th>
+                  <th>Descriptions</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr ng-repeat="rfc in rfcs | filter:search" class="list">
+                  <td><button ng-click="mod_form()"><i class="fa fa-fw fa-pencil"></i></button></td>
+                  <td>{{rfc.subject}}</td>
+                  <td>{{rfc.creation_date}}</td>
+                  <td>{{rfc.descriptions}}</td>
+                </tr>
+              </tbody>
+            </table>
+         </div>
+       </div>
+     </div>
 </div>
 
 <script>
@@ -180,12 +228,36 @@ $scope.mod_form = function() {
 angular.module('listapp', ['user_control', 'user_forms', 'ngRoute']);
 </script>
 <script>
+var options = {
+  valueNames: [ 'subject', 'date' ]
+};
+
+var userList = new List('forms', options);
 $( document ).ready(function() {
   var scope = angular.element(document.getElementById("control")).scope();
     scope.$apply(function () {
     scope.getList();
     });
  });
+ function myFunction() {
+     document.getElementById("myDropdown").classList.toggle("show");
+ }
+
+ // Close the dropdown menu if the user clicks outside of it
+ window.onclick = function(event) {
+   if (!event.target.matches('.dropbtn')) {
+
+     var dropdowns = document.getElementsByClassName("dropdown-content");
+     var i;
+     for (i = 0; i < dropdowns.length; i++) {
+       var openDropdown = dropdowns[i];
+       if (openDropdown.classList.contains('show')) {
+         openDropdown.classList.remove('show');
+       }
+     }
+   }
+ }
+
 </script>
 </body>
   </div>

@@ -67,7 +67,7 @@ function(token, refreshToken, profile, done) {
                 newUser.name  = profile.name.givenName + ' ' + profile.name.familyName;
                 newUser.email = profile.emails[0].value;
                 newUser.image = profile.photos[0].value;
-                newUser.role = 'user';
+                newUser.role = '!user';
                 newUser.provider = profile.provider;
                 // save our user to the database
                 newUser.save(function(err) {
@@ -133,7 +133,7 @@ function(token, refreshToken, profile, done) {
                     newUser.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
                     newUser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
                     newUser.image = profile.photos[0].value;
-                    newUser.role = 'user';
+                    newUser.role = '!user';
                     newUser.provider = profile.provider;
                     // save our user to the database
                     newUser.save(function(err) {
@@ -196,7 +196,7 @@ function(token, refreshToken, profile, done) {
                     newUser.token       = token;
                   // newUser.email    = profile.emails[0].value;
                     newUser.image = profile.photos[0].value;
-                    newUser.role = 'user';
+                    newUser.role = '!user';
                     newUser.provider = profile.provider;
                     // save our user into the database
                     newUser.save(function(err) {
@@ -252,7 +252,7 @@ function(token, refreshToken, profile, done) {
                        newUser.token = token;
                        newUser.name  = profile.displayName;
                        newUser.email = profile.emails[0].value; // pull the first email
-                       newUser.role = 'user';
+                       newUser.role = '!user';
                        newUser.provider = profile.provider;
                        newUser.image = profile.photos[0].value;
                        // save the user
