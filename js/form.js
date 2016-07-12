@@ -38,10 +38,10 @@ $scope.request.status = 'pending';
 $scope.facebook = {};
 
   $scope.modifyRFC = function(id){
+    $scope.request.time = new Date();
 var json = JSON.stringify($scope.request,null, 4);
     RFC_factory.modify_form(id, json)
     .success(function(data){
-
           $scope.request = {};
 
       });
@@ -79,7 +79,7 @@ else{
   $scope.request.nt= $( "#t option:selected" ).map(function(){ return $(this).text();}).get().join();
   $scope.request.categories = $( "#c option:selected" ).map(function(){ return $(this).text();}).get().join();
 
-  if($scope.request.subject != ''){
+  if($scope.request.subject != null){
 
 var json = JSON.stringify($scope.request,null, 4);
 

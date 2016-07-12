@@ -248,7 +248,8 @@
     <div id="todo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
-					<button type="submit" class="btn btn-primary btn-lg" onclick="changeOrMod()">Submit</button>
+					<button type="submit" class="btn btn-primary btn-lg hvr-icon-bounce" onclick="changeOrMod()" id="submit">Submit</button>
+          <button type="submit" class="btn btn-primary btn-lg hvr-icon-back" id="back" onclick="goBack()">Back</button>
 				</form>
 			</div>
 		</div>
@@ -258,9 +259,15 @@
     </div>
 
 <script>
+function goBack() {
+    window.history.back();
+}
 $( document ).ready(function() {
-
+  var mode = getParameterByName('mode');
   var id = getParameterByName('id');
+  if(mode =='view'){
+    $('#submit').hide();
+  }
   if(id != null){
   var scope = angular.element(document.getElementById("page-top")).scope();
     scope.$apply(function () {

@@ -26,7 +26,7 @@ module.exports = {
       'clientID'      : '77tocnxazjocbd',
       'clientSecret'  : '5Lckg1T13cTdliUt',
 //      'callbackURL'   : 'http://localhost:8080/auth/linkedin/callback'
-    'callbackURL'   : 'http://'+mongohost+'/auth/linkedin/callback'
+    'callbackURL'   : 'http://54.242.60.137/auth/linkedin/callback'
     }
 
 };

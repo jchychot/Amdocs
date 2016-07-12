@@ -109,7 +109,7 @@ input{
     <button class="dropbtn btn btn-info test"><i class="fa fa-fw fa-terminal"></i>Create form</button>
     <div id="myDropdown" class="dropdown-content">
       <a href="form.html" type="button"><i class="fa fa-fw fa-plus-square-o"></i>
-        new submition
+        new submission
       </a>
   <a data-toggle="modal" data-target="#myModal2"><i class="fa fa-fw fa-history"></i>clone from history</a>
     </div>
@@ -135,9 +135,9 @@ input{
      </thead>
      <tbody>
       <tr ng-repeat="rfc in rfcs" ng-class="{selected : rfc._id === ids }">
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.subject}}</td>
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.creation_date}}</td>
-         <td ng-dblclick="mod_form()" ng-click="getId(rfc._id)">{{rfc.status}}</td>
+         <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.subject}}</td>
+         <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.creation_date}}</td>
+         <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.status}}</td>
        </tr>
      </tbody>
    </table>
@@ -161,7 +161,7 @@ input{
               </thead>
               <tbody>
                <tr ng-repeat="rfc in rfcs | filter:search" class="list">
-                  <td><button ng-click="mod_form()"><i class="fa fa-fw fa-pencil"></i></button></td>
+                  <td><button ng-click="clone(rfc._id)"><i class="fa fa-fw fa-pencil"></i></button></td>
                   <td>{{rfc.subject}}</td>
                   <td>{{rfc.creation_date}}</td>
                   <td>{{rfc.descriptions}}</td>
@@ -190,6 +190,9 @@ angular.module('user_forms', [])
     },
     log_out : function(){
       return $http.get('/logout');
+    },
+    clone_form : function(id){
+      return $http.get('/api/rfc/'+ id);
     }
   }
 }]);
@@ -205,6 +208,18 @@ $scope.log_out = function(){
   user_factory.log_out();
   window.top.location = "login.html"
 };
+$scope.view = function(id){
+  user_factory.clone_form(id)
+  .success(function(){
+      window.top.location = "form.html"+ '?id='+ id + '&mode=view';
+  });
+};
+$scope.clone = function(id){
+  user_factory.clone_form(id)
+  .success(function(){
+      window.top.location = "form.html"+ '?id='+ id + '&mode=clone';
+  });
+};
 
 $scope.getList = function() {
 
@@ -218,7 +233,7 @@ user_factory.get_form()
 
 $scope.mod_form = function() {
 
-   window.top.location = "form.html"+ '?id='+ $scope.ids;
+   window.top.location = "form.html"+ '?id='+ $scope.ids+'&mode=modify';
 
 };
 

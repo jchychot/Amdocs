@@ -8,8 +8,6 @@ module.exports = function(app, passport){
 // routes for rfc app
   app.get('/api/rfc', isLoggedIn,function(req,res){
     // use facebook email by default
-
-
       rfc.find(function(err,rfc){
         if(req.user.role=='admin'){
           res.json(rfc);
@@ -18,10 +16,7 @@ module.exports = function(app, passport){
             {
             res.send(err);
           }
-
       });
-
-
   } );
 
   app.get('/api/rfc/:_id', function(req, res){
@@ -75,6 +70,17 @@ module.exports = function(app, passport){
       });
     }
   });
+
+  });
+
+  app.put('/api/user/:_id', function(req,res){
+      User.findOne({_id : req.params._id}
+        ,function(err, user){
+            if(err){
+              res.send(err);
+            }
+              res.json(user);
+        });
 
   });
 
