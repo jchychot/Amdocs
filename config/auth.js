@@ -1,4 +1,5 @@
 var mongohost = process.env.MONGOHOST || 'localhost:8080';
+var proxyhost = process.env.PROXYHOST || '54.242.60.137';
 // need to change in Oauth when we actually test the app
 module.exports = {
 
@@ -6,7 +7,7 @@ module.exports = {
         'clientID'      : '249326552099211', // your App ID
         'clientSecret'  : '6550dcdc1bf3834b3ab16cb36ca93f63', // your App Secret
     //    'callbackURL'   : 'http://localhost:8080/auth/facebook/callback'
-      'callbackURL'   : 'http://'+mongohost+'/auth/facebook/callback'
+      'callbackURL'   : 'http://localhost:8080/auth/facebook/callback'
     },
 
     'twitterAuth' : {
@@ -25,8 +26,7 @@ module.exports = {
     'linkedinAuth' : {
       'clientID'      : '77tocnxazjocbd',
       'clientSecret'  : '5Lckg1T13cTdliUt',
-//      'callbackURL'   : 'http://localhost:8080/auth/linkedin/callback'
-    'callbackURL'   : 'http://54.242.60.137/auth/linkedin/callback'
+    'callbackURL'   : 'http://'+proxyhost+'/auth/linkedin/callback'
     }
 
 };

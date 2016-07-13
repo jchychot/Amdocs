@@ -12,7 +12,7 @@ var port = process.env.PORT || 8080;
 var session      = require('express-session');
 var passport = require('passport');
 var flash    = require('connect-flash');
-
+var proxyhost = process.env.PROXYHOST || '54.242.60.137';
 // passport configuration
 require('./config/passport')(passport);
 //configuration
@@ -40,3 +40,4 @@ require('./app/routes.js')(app, passport);
 //listen
 app.listen(port);
 console.log("App listening on port" + port);
+console.log("Linkedin URL:" + proxyhost);
