@@ -113,8 +113,8 @@ label{
 <div class="container" id="list">
 
   <div class="row">
-<div class="animated bounceInUp">
-      <div ng-repeat="user in users | filter: {role :'user'}:true" class="col-md-4" style="width:200px;height:200px">
+<div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div ng-repeat="user in users | filter: {role :'user'}:true" class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -167,8 +167,8 @@ label{
   </div>
 </div>
  <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
- <div class="animated bounceInUp">
-       <div ng-repeat="user in users | filter: {role :'not-user'}:true" class="col-md-4" style="width:200px;height:200px">
+ <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)">
+       <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} class="col-md-4 UU" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
 
          <a class="thumbnail">
            <span class={{user.icon}} id={{$index}}t></span>
@@ -179,8 +179,8 @@ label{
  </div>
 </div>
 <legend class="text-muted text-center" style="color:black">Administrator</legend>
-<div class="animated bounceInUp">
-      <div ng-repeat="user in users | filter: {role :'admin'}:true" class="col-md-4" style="width:200px;height:200px">
+<div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:100px; height:100px">
+      <div ng-repeat="user in users | filter: {role :'admin'}:true" class="col-md-4 A" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -211,6 +211,9 @@ angular.module('user_forms', [])
     },
     create_user : function(data){
       return $http.post('/api/user', data);
+    },
+    status_change : function(id, new_status){
+      return $http.put('/api/user/'+id, new_status);
     }
   }
 }]);
@@ -219,6 +222,38 @@ angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 $scope.ids = null;
 $scope.user = {};
+// functions for changing status
+$scope.toAdmin = function(id){
+    $scope.user.role = 'admin';
+    var json = JSON.stringify($scope.user,null, 4);
+    user_factory.status_change(id,json)
+    .success(function(data){
+          $scope.user = {};
+
+      });
+
+};
+$scope.toUser = function(id){
+    $scope.user.role = 'user';
+    var json = JSON.stringify($scope.user,null, 4);
+    user_factory.status_change(id,json)
+    .success(function(data){
+          $scope.user = {};
+
+      });
+
+};
+$scope.toUUser = function(id){
+    $scope.user.role = 'not-user';
+    var json = JSON.stringify($scope.user,null, 4);
+    user_factory.status_change(id,json)
+    .success(function(data){
+          $scope.user = {};
+
+      });
+
+};
+
 user_factory.get_user()
 .success(function(data){
   $scope.users = data;
@@ -279,7 +314,49 @@ angular.module('listapp', ['user_control', 'user_forms', 'ngRoute']);
 $( document ).ready(function() {
 $('#exist').hide();
 $('#fill').hide();
+var drop_items = $('.dnd-onto-website').find('.drop');
+function setUpEventListeners() {
+  drop_items.each(function() {
+    var thisDrop = $(this);
+
+
+    thisDrop[0].addEventListener('drop', drop);
+
+
+  });
+
+}
+setUpEventListeners();
+function drag(event){
+  event.dataTransfer.setData("text/html", event.target.id);
+}
+
+
+
+
  });
+ function drag(event){
+   event.dataTransfer.setData("text/html", event.target.id);
+
+ }
+ function drop(event){
+   event.preventDefault();
+
+     var drop = $(this);
+
+     drop.removeClass('drop-active');
+     var item_id, dataType;
+     item_id = event.dataTransfer.getData('text/html');
+     dataType = 'text/html';
+     event.target.appendChild(document.getElementById(item_id));
+  $('#control').scope().toAdmin(item_id);
+    alert($(event.target).attr('class'));
+ }
+
+ function allowDrop(ev) {
+     ev.preventDefault();
+ }
+
 
 </script>
 </body>

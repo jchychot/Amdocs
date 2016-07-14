@@ -73,15 +73,11 @@ module.exports = function(app, passport){
 
   });
 
-  app.put('/api/user/:_id', function(req,res){
-      User.findOne({_id : req.params._id}
-        ,function(err, user){
-            if(err){
-              res.send(err);
-            }
-              res.json(user);
-        });
-
+  app.put('/api/user/:_id', function(req,res,next){
+    User.findByIdAndUpdate(req.params._id, req.body, function (err, obj) {
+          if (err) return next(err);
+          res.json(obj);
+  });
   });
 
   //create entry
