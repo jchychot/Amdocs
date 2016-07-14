@@ -14,14 +14,14 @@ module.exports = {
         'consumerKey'       : 'xGPl7K27g0YilgHsua2qy54J5',
         'consumerSecret'    : 'HkX4lg79iRvQCUr4EnAXYUWQ6ruH6B42fihqOjsmlyJfT2ofzS',
       //  'callbackURL'       : 'http://localhost:8080/auth/twitter/callback'
-          'callbackURL'   : 'http://'+mongohost+'/auth/twitter/callback'
+          'callbackURL'   : 'http://'+proxyhost+'/auth/twitter/callback'
     },
 
     'googleAuth' : {
         'clientID'      : '564236928671-crejp57oa63oc44jjjnbf7jqj9qes9t9.apps.googleusercontent.com',
         'clientSecret'  : 'fER8MmjEMFbIH63-891knq9r',
   //      'callbackURL'   : 'http://localhost:8080/auth/google/callback'
-      'callbackURL'   : 'http://'+mongohost+'/auth/google/callback'
+      'callbackURL'   : 'http://'+proxyhost+'/auth/google/callback'
     },
     'linkedinAuth' : {
       'clientID'      : '77tocnxazjocbd',

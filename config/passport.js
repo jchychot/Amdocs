@@ -53,7 +53,12 @@ function(token, refreshToken, profile, done) {
                 user.provider = profile.provider;
                 if(user.role != 'admin')
                 user.role = 'user';
-                user.image = profile.photos[0].value;
+                if(profile.photos[0] == undefined){
+                  newUser.image = '/../images/user.png'
+                }
+                else{
+                newUser.image = profile.photos[0].value;
+              }
                 user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                 user.save(function(err) {
                     if (err)
@@ -68,7 +73,12 @@ function(token, refreshToken, profile, done) {
                 newUser.token = token;
                 newUser.name  = profile.name.givenName + ' ' + profile.name.familyName;
                 newUser.email = profile.emails[0].value;
+                if(profile.photos[0] == undefined){
+                  newUser.image = '/../images/user.png'
+                }
+                else{
                 newUser.image = profile.photos[0].value;
+              }
                 newUser.role = 'not-user';
                 newUser.provider = profile.provider;
                 // save our user to the database
@@ -119,7 +129,12 @@ function(token, refreshToken, profile, done) {
                       if(user.role != 'admin')
                       user.role = 'user';
                       user.provider = profile.provider;
-                      user.image = profile.photos[0].value;
+                      if(profile.photos[0] == undefined){
+                        newUser.image = '/../images/user.png'
+                      }
+                      else{
+                      newUser.image = profile.photos[0].value;
+                    }
                       user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                       user.save(function(err) {
                           if (err)
@@ -136,7 +151,12 @@ function(token, refreshToken, profile, done) {
                     newUser.token = token; // we will save the token that facebook provides to the user
                     newUser.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
                     newUser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    if(profile.photos[0] == undefined){
+                      newUser.image = '/../images/user.png'
+                    }
+                    else{
                     newUser.image = profile.photos[0].value;
+                  }
                     newUser.role = 'not-user';
                     newUser.provider = profile.provider;
                     // save our user to the database
@@ -184,7 +204,12 @@ function(token, refreshToken, profile, done) {
                         if(user.role != 'admin')
                       user.role = 'user';
                     user.provider = profile.provider;
-                    user.image = profile.photos[0].value;
+                    if(profile.photos[0] == undefined){
+                      newUser.image = '/../images/user.png'
+                    }
+                    else{
+                    newUser.image = profile.photos[0].value;
+                  }
                     user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                     user.save(function(err) {
                         if (err)
@@ -201,7 +226,12 @@ function(token, refreshToken, profile, done) {
                     newUser.name    = profile.username;
                     newUser.token       = token;
                   // newUser.email    = profile.emails[0].value;
-                    newUser.image = profile.photos[0].value;
+                  if(profile.photos[0] == undefined){
+                    newUser.image = '/../images/user.png'
+                  }
+                  else{
+                  newUser.image = profile.photos[0].value;
+                }
                     newUser.role = 'not-user';
                     newUser.provider = profile.provider;
                     // save our user into the database
@@ -244,7 +274,12 @@ function(token, refreshToken, profile, done) {
                            if(user.role != 'admin')
                          user.role = 'user';
                        user.provider = profile.provider;
-                       user.image = profile.photos[0].value;
+                       if(profile.photos[0] == undefined){
+                         newUser.image = '/../images/user.png'
+                       }
+                       else{
+                       newUser.image = profile.photos[0].value;
+                     }
                        user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                        user.save(function(err) {
                            if (err)
@@ -262,7 +297,12 @@ function(token, refreshToken, profile, done) {
                        newUser.email = profile.emails[0].value; // pull the first email
                        newUser.role = 'not-user';
                        newUser.provider = profile.provider;
+                       if(profile.photos[0] == undefined){
+                         newUser.image = '/../images/user.png'
+                       }
+                       else{
                        newUser.image = profile.photos[0].value;
+                     }
                        // save the user
                        newUser.save(function(err) {
                            if (err)
