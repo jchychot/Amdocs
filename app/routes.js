@@ -198,9 +198,9 @@ app.get('/auth/twitter/callback',
 // route for logging out
 app.get('/logout', function(req, res) {
 
-  req.session.destroy(function (err) {
+req.logout();
   res.redirect('/'); //Inside a callback… bulletproof!
-});
+
     // req.logout();
     //   res.redirect('/../login.html');
 

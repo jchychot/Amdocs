@@ -58,6 +58,11 @@ margin-top: 20px;
 label{
   margin-top: 20px;
 }
+.dash{
+  border: 2px dashed #000;
+  width:200px;
+  height: 250px;
+}
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
@@ -113,8 +118,8 @@ label{
 <div class="container" id="list">
 
   <div class="row">
-<div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)">
-      <div ng-repeat="user in users | filter: {role :'user'}:true" class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
+<div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)" id="R">
+      <div ng-repeat="user in users | filter: {role :'user'}:true" class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -123,7 +128,7 @@ label{
 
 </a>
 </div>
-
+</div>
 <div class="col-md-4" style="width:200px;height:250px">
   <a data-toggle="modal" data-target="#myModal" class="thumbnail">
    <img src="images/add.png" style="width:150px;height:150px"/>
@@ -132,7 +137,7 @@ label{
 </a>
 </div>
 
-</div>
+
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -167,8 +172,8 @@ label{
   </div>
 </div>
  <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
- <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)">
-       <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} class="col-md-4 UU" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
+ <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="UR">
+       <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} style="width:200px; height:250px" class="col-md-4 UU" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
          <a class="thumbnail">
            <span class={{user.icon}} id={{$index}}t></span>
@@ -179,8 +184,8 @@ label{
  </div>
 </div>
 <legend class="text-muted text-center" style="color:black">Administrator</legend>
-<div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:100px; height:100px">
-      <div ng-repeat="user in users | filter: {role :'admin'}:true" class="col-md-4 A" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)">
+<div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="A">
+      <div ng-repeat="user in users | filter: {role :'admin'}:true" class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -189,7 +194,9 @@ label{
 
 </a>
 </div>
+
 </div>
+
 </div>
 <script>
 // web services
@@ -327,16 +334,11 @@ function setUpEventListeners() {
 
 }
 setUpEventListeners();
-function drag(event){
-  event.dataTransfer.setData("text/html", event.target.id);
-}
-
-
-
 
  });
  function drag(event){
    event.dataTransfer.setData("text/html", event.target.id);
+   changeBorder(event);
 
  }
  function drop(event){
@@ -350,13 +352,25 @@ function drag(event){
      dataType = 'text/html';
      event.target.appendChild(document.getElementById(item_id));
   $('#control').scope().toAdmin(item_id);
-    alert($(event.target).attr('class'));
+
  }
 
  function allowDrop(ev) {
      ev.preventDefault();
- }
 
+ }
+ function changeBorder(ev){
+     var new_role = document.createElement('div');
+     new_role.className = "dash col-md-4";
+  document.getElementById("R").appendChild(new_role);
+    var new_role2 = new_role.cloneNode(true);
+  document.getElementById("A").appendChild(new_role2);
+   var new_role3 = new_role.cloneNode(true);
+  document.getElementById("UR").appendChild(new_role3);
+ }
+ function end_drag(ev){
+    $('.dash').remove();
+ }
 
 </script>
 </body>
