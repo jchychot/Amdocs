@@ -53,6 +53,15 @@ module.exports = function(app, passport){
         res.json(rfc);
       });
   } );
+// get user profile
+  app.get('/user/profile', isLoggedIn,function(req,res){
+    User.findOne({email: req.user.email},function(err,user){
+          if(err){
+            res.send(err);
+          }
+          res.json(req.user);
+    });
+});
 // create user
   app.post('/api/user', function(req,res){
     User.findOne({'email' : req.body.email}, function(err, user) {

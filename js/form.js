@@ -24,7 +24,9 @@ get_user : function() {
   getCC : function(id){
     return $http.get('/api/rfc/'+ id);
   },
-
+  get_profile: function(){
+      return $http.get('/user/profile');
+  }
 }
 }]);
 
@@ -36,6 +38,14 @@ $scope.request = {};
 $scope.request.time = new Date();
 $scope.request.status = 'pending';
 $scope.facebook = {};
+RFC_factory.get_profile()
+.success(function(data){
+  $scope.user = data;
+  if(data.name != undefined)
+  document.getElementById('username').innerHTML = data.name;
+  $('#pic').attr('src', data.image);
+
+});
 
   $scope.modifyRFC = function(id){
     $scope.request.time = new Date();
@@ -46,8 +56,8 @@ var json = JSON.stringify($scope.request,null, 4);
 
       });
   };
-  $scope.createRFC = function(id){
-    if(id != null){
+  $scope.createRFC = function(id, mode){
+    if(mode == 'modify'){
       $scope.request.impact = $('input[name="optradio"]:checked').val();
       $scope.request.result = $('input[name="optradio1"]:checked').val();
       $scope.request.implemented = $('input[name="optradio2"]:checked').val();

@@ -88,10 +88,10 @@ input{
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a><img src="images/user.jpg" id="pic" height="20" width="20"></a>
+            <a ng-model="user.image"><img src="images/user.jpg" id="pic" height="20" width="20"></a>
               </li>
           <li>
-            <a id="username">--</a>
+            <a id="username" ng-model="user.name">--</a>
           </li>
           <li>
             <a id="logoutBtn" ng-click="log_out()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
@@ -178,7 +178,9 @@ input{
 angular.module('user_forms', [])
 .factory('user_factory', ['$http', '$q', function($http, $q){
   return{
-
+    get_profile: function(){
+        return $http.get('/user/profile');
+    },
     get_form: function(){
         return $http.get('/options');
     },
@@ -200,6 +202,17 @@ angular.module('user_forms', [])
 angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 $scope.ids = null;
+$scope.user= {};
+
+user_factory.get_profile()
+.success(function(data){
+  $scope.user = data;
+  document.getElementById('username').innerHTML = data.name;
+  $('#pic').attr('src', data.image);
+
+});
+
+
 $scope.getId = function(id){
   $scope.ids = id;
 };

@@ -266,7 +266,7 @@ $( document ).ready(function() {
   var mode = getParameterByName('mode');
   var id = getParameterByName('id');
   if(mode =='view'){
-    $('#submit').hide();
+    $('#submit').remove();
   }
   if(id != null){
   var scope = angular.element(document.getElementById("page-top")).scope();
@@ -296,10 +296,11 @@ $( document ).ready(function() {
   }
  });
 function changeOrMod(){
+    var mode = getParameterByName('mode');
     var id = getParameterByName('id');
   var scope = angular.element(document.getElementById("page-top")).scope();
     scope.$apply(function () {
-    scope.createRFC(id);
+    scope.createRFC(id,mode);
     });
 
 };

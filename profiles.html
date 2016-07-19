@@ -119,7 +119,7 @@ label{
 
   <div class="row">
 <div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)" id="R">
-      <div ng-repeat="user in users | filter: {role :'user'}:true" class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
+      <div ng-repeat="user in users | filter: {role :'user'}:true" id={{user._id}} class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -185,7 +185,7 @@ label{
 </div>
 <legend class="text-muted text-center" style="color:black">Administrator</legend>
 <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="A">
-      <div ng-repeat="user in users | filter: {role :'admin'}:true" class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
+      <div ng-repeat="user in users | filter: {role :'admin'}:true" id={{user._id}} class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
         <a class="thumbnail">
           <span class={{user.icon}} id={{$index}}t></span>
@@ -221,6 +221,9 @@ angular.module('user_forms', [])
     },
     status_change : function(id, new_status){
       return $http.put('/api/user/'+id, new_status);
+    },
+    get_profile: function(){
+        return $http.get('/user/profile');
     }
   }
 }]);
@@ -230,6 +233,13 @@ angular.module('user_control',[])
 $scope.ids = null;
 $scope.user = {};
 // functions for changing status
+user_factory.get_profile()
+.success(function(data){
+  $scope.user = data;
+  document.getElementById('username').innerHTML = data.name;
+  $('#pic').attr('src', data.image);
+
+});
 $scope.toAdmin = function(id){
     $scope.user.role = 'admin';
     var json = JSON.stringify($scope.user,null, 4);
@@ -240,7 +250,7 @@ $scope.toAdmin = function(id){
       });
 
 };
-$scope.toUser = function(id){
+$scope.toReg = function(id){
     $scope.user.role = 'user';
     var json = JSON.stringify($scope.user,null, 4);
     user_factory.status_change(id,json)
@@ -250,7 +260,7 @@ $scope.toUser = function(id){
       });
 
 };
-$scope.toUUser = function(id){
+$scope.toUReg = function(id){
     $scope.user.role = 'not-user';
     var json = JSON.stringify($scope.user,null, 4);
     user_factory.status_change(id,json)
@@ -292,8 +302,6 @@ else{
 $scope.user.role = 'user';
 }
   var json = JSON.stringify($scope.user,null, 4);
-
-
   user_factory.create_user(json)
   .success(function(data){
       $scope.user = {};
@@ -338,6 +346,7 @@ setUpEventListeners();
  });
  function drag(event){
    event.dataTransfer.setData("text/html", event.target.id);
+
    changeBorder(event);
 
  }
@@ -350,9 +359,20 @@ setUpEventListeners();
      var item_id, dataType;
      item_id = event.dataTransfer.getData('text/html');
      dataType = 'text/html';
-     event.target.appendChild(document.getElementById(item_id));
-  $('#control').scope().toAdmin(item_id);
-
+     console.log(event.target);
+  //   event.target.appendChild(document.getElementById(item_id));
+     if(event.target.className == 'dash col-md-4 A'){
+       document.getElementById("A").appendChild(document.getElementById(item_id));
+      $('#control').scope().toAdmin(item_id);
+    }
+    else if (event.target.className == 'dash col-md-4 R'){
+      document.getElementById("R").appendChild(document.getElementById(item_id));
+      $('#control').scope().toReg(item_id);
+    }
+    else if (event.target.className == 'dash col-md-4 UR'){
+      document.getElementById("UR").appendChild(document.getElementById(item_id));
+    $('#control').scope().toUReg(item_id);
+  }
  }
 
  function allowDrop(ev) {
@@ -361,14 +381,17 @@ setUpEventListeners();
  }
  function changeBorder(ev){
      var new_role = document.createElement('div');
-     new_role.className = "dash col-md-4";
+     new_role.className = "dash col-md-4 R";
   document.getElementById("R").appendChild(new_role);
     var new_role2 = new_role.cloneNode(true);
+    new_role2.className = "dash col-md-4 A";
   document.getElementById("A").appendChild(new_role2);
    var new_role3 = new_role.cloneNode(true);
+       new_role3.className = "dash col-md-4 UR";
   document.getElementById("UR").appendChild(new_role3);
  }
  function end_drag(ev){
+   //$(this).removeClass('.dash');
     $('.dash').remove();
  }
 

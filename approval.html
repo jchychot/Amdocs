@@ -94,7 +94,7 @@ margin-top: 10px;
     </div>
   </header>
 
-<div class="container" id="list">
+<div id="list">
 
   <table class="table table-hover">
      <thead>
@@ -114,7 +114,7 @@ margin-top: 10px;
          <td>{{rfc.name}}</td>
             <td>{{rfc.email}}</td>
             <td id="{{$index}}">{{rfc.status}}</td>
-            <td>
+            <td style="width: 363px; height: 51px">
               <button type="submit" class="btn btn-success" ng-click="approve(rfc._id, $index)">Approve</button>
               <button type="submit" class="btn btn-danger" ng-click="reject(rfc._id, $index)">Reject</button>
               <a href="approval.html" type="submit" class="btn btn-info">Confirm</a>
@@ -153,6 +153,9 @@ angular.module('admin_forms', [])
     },
     changeStatus : function(id, status){
       return $http.put('/api/rfc/'+ id, status);
+    },
+    get_profile: function(){
+        return $http.get('/user/profile');
     }
 
   }
@@ -162,7 +165,13 @@ angular.module('admin_forms', [])
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
 
+  admin_factory.get_profile()
+  .success(function(data){
+    $scope.user = data;
+    document.getElementById('username').innerHTML = data.name;
+    $('#pic').attr('src', data.image);
 
+  });
 
 $scope.getList = function() {
 
