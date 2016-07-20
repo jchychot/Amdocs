@@ -73,7 +73,7 @@
 
 .hovereffect .rotate {
   -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
+  -ms-transform: rotate(-75deg);
   transform: rotate(-45deg);
   width: 100%;
   height: 100%;
