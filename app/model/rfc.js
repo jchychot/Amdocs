@@ -101,8 +101,7 @@ module.exports = mongoose.model('rfc',{
     default: 0
   },
   creation_date: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   status: {
     type: String,

@@ -57,6 +57,7 @@ var json = JSON.stringify($scope.request,null, 4);
       });
   };
   $scope.createRFC = function(id, mode){
+    
     if(mode == 'modify'){
       $scope.request.impact = $('input[name="optradio"]:checked').val();
       $scope.request.result = $('input[name="optradio1"]:checked').val();

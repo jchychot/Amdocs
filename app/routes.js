@@ -72,7 +72,8 @@ module.exports = function(app, passport){
       User.create({
           name : req.body.name,
           email : req.body.email,
-          role : req.body.role
+          role : req.body.role,
+          company : req.body.company
       },function(err,user){
         if(err)
           res.send(err);

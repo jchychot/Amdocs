@@ -137,14 +137,34 @@ label{
     <span class="w3-opennav w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-section w3-bottombar w3-padding-16">
       <span class="w3-margin-right">Filter:</span>
-      <button class="w3-btn">ALL</button>
-      <button class="w3-btn w3-white"><i class="fa fa-diamond w3-margin-right"></i>Company</button>
-      <button class="w3-btn w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
+      <button class="w3-btn" ng-click="filters.category=''">ALL</button>
+      <button class="w3-btn w3-white" ng-click="filters.name='company'"><i class="fa fa-diamond w3-margin-right"></i>Company</button>
+      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='status'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
       <button class="w3-btn w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Name</button>
       <button class="w3-btn w3-right" style="position:absolute;right:20px" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-signs w3-margin-right"></i>add new user</button>
     </div>
   </header>
+<!-- test !-->
+  <div ng-repeat="cat in categories | filter: filters">
 
+  	<div ng-repeat="company_name in cat.list">
+  	<legend class="text-muted text-center" style="color:black">{{company_name}}</legend>
+  		<div id={{$index}} ng-repeat="user in users | filter: filters" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
+
+
+          <a class="thumbnail">
+            <span class={{user.icon}} id={{$index}}t></span>
+                <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
+              <p>{{user.name}}</p>
+            </a>
+          </div>
+
+          </div>
+  </div>
+
+
+
+<!-- section 1 !-->
     <legend class="text-muted text-center" style="color:black">Registered Users</legend>
 <div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)" id="R">
       <div ng-repeat="user in users | filter: {role :'user'}:true" id={{user._id}} class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
@@ -157,6 +177,7 @@ label{
 </a>
 </div>
 </div>
+<!-- the modal !-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -169,7 +190,7 @@ label{
           </div>
           <div>
           <label>Company:</label>
-          <input type="text" name="user" id="usrnm1" placeholder="Company name">
+          <input type="text" name="user" id="usrnm1" placeholder="Company name" ng-model="user.company">
         </div>
         <div>
         <label>Email address:</label>
@@ -179,17 +200,17 @@ label{
             <label for="log">make administrator</label>
             <input type="checkbox" name="login" id="log" value="1" ng-model="user.admin">
                   </div>
-            <a type="submit" data-inline="true" ng-click="createUser()" data-dismiss="modal" class="btn btn-block btn-social btn-dropbox">
+            <a id="close" type="submit" data-inline="true" ng-click="createUser()" class="btn btn-block btn-social btn-dropbox">
               <span class="fa fa-plus-square"></span> Create User
             </a>
             <p id="exist">this user already exist</p>
-            <p id="fill">please fill in the email field</p>
+            <p id="fill" style="color:red">please fill in the email field</p>
           </div>
         </form>
       </div>
     </div>
   </div>
-
+<!-- section 2 !-->
  <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
  <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="UR">
        <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} style="width:200px; height:250px" class="col-md-4 UU" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
@@ -202,6 +223,7 @@ label{
  </a>
  </div>
 </div>
+<!-- section 3 !-->
 <legend class="text-muted text-center" style="color:black">Administrator</legend>
 <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="A">
       <div ng-repeat="user in users | filter: {role :'admin'}:true" id={{user._id}} class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
@@ -293,6 +315,12 @@ angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 $scope.ids = null;
 $scope.user = {};
+$scope.filters = {};
+$scope.filter_name = '';
+$scope.categories = [
+  {name:'company', list: ['Amdocs', 'AT&T', 'Cricket']},
+  {name:'status', list: ['not-user', 'user', 'admin']}
+];
 // functions for changing status
 user_factory.get_profile()
 .success(function(data){
@@ -362,14 +390,20 @@ $scope.createUser = function(){
 else{
 $scope.user.role = 'user';
 }
+
+if($scope.user.email != undefined){
   var json = JSON.stringify($scope.user,null, 4);
   user_factory.create_user(json)
   .success(function(data){
       $scope.user = {};
 
   });
-window.top.location = "profiles.html";
-
+//window.top.location = "profiles.html";
+$('#close').attr("data-dismiss", "modal");
+}
+else {
+  $('#fill').show();
+}
 
 }
 $scope.getId = function(id){

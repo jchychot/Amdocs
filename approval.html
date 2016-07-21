@@ -101,7 +101,7 @@ margin-top: 10px;
     <div class="w3-container w3-red w3-padding-16">
       <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
       <div class="w3-right">
-        <h3>52</h3>
+        <h3>10</h3>
       </div>
       <div class="w3-clear"></div>
       <h4>New Submissons</h4>
@@ -227,10 +227,12 @@ angular.module('admin_forms', [])
 // controller
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
-
+var rfcs = {};
+$scope.date = new Date();
   admin_factory.get_profile()
   .success(function(data){
     $scope.user = data;
+
     document.getElementById('username').innerHTML = data.name;
     $('#pic').attr('src', data.image);
 
