@@ -56,6 +56,7 @@ label{
   width:200px;
   height: 200px;
 }
+
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
@@ -137,7 +138,7 @@ label{
     <span class="w3-opennav w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-section w3-bottombar w3-padding-16">
       <span class="w3-margin-right">Filter:</span>
-      <button class="w3-btn" ng-click="filters.category=''">ALL</button>
+      <button class="w3-btn" ng-click="filters.name=''">ALL</button>
       <button class="w3-btn w3-white" ng-click="filters.name='company'"><i class="fa fa-diamond w3-margin-right"></i>Company</button>
       <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='status'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
       <button class="w3-btn w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Name</button>
@@ -149,8 +150,7 @@ label{
 
   	<div ng-repeat="company_name in cat.list">
   	<legend class="text-muted text-center" style="color:black">{{company_name}}</legend>
-  		<div id={{$index}} ng-repeat="user in users | filter: filters" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
-
+  		<div id="role" ng-repeat="user in users | filter: {role : company_name}" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
 
           <a class="thumbnail">
             <span class={{user.icon}} id={{$index}}t></span>
@@ -158,6 +158,14 @@ label{
               <p>{{user.name}}</p>
             </a>
           </div>
+          <div id="company" ng-repeat="user in users | filter: {company : company_name}" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
+
+              <a class="thumbnail">
+                <span class={{user.icon}} id={{$index}}t></span>
+                    <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
+                  <p>{{user.name}}</p>
+                </a>
+              </div>
 
           </div>
   </div>
@@ -316,6 +324,7 @@ angular.module('user_control',[])
 $scope.ids = null;
 $scope.user = {};
 $scope.filters = {};
+$scope.filter2 = {};
 $scope.filter_name = '';
 $scope.categories = [
   {name:'company', list: ['Amdocs', 'AT&T', 'Cricket']},
@@ -424,6 +433,7 @@ angular.module('listapp', ['user_control', 'user_forms', 'ngRoute']);
 $( document ).ready(function() {
 $('#exist').hide();
 $('#fill').hide();
+
 var drop_items = $('.dnd-onto-website').find('.drop');
 function setUpEventListeners() {
   drop_items.each(function() {
@@ -437,6 +447,11 @@ function setUpEventListeners() {
 
 }
 setUpEventListeners();
+
+ });
+ $('.w3-btn').click(function(){
+      $('.w3-btn').addClass("w3-white");
+      $(this).removeClass("w3-white");
 
  });
  function drag(event){
