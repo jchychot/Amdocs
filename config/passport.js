@@ -54,10 +54,10 @@ function(token, refreshToken, profile, done) {
                 if(user.role != 'admin')
                 user.role = 'user';
                 if(profile.photos[0] == undefined){
-                  newUser.image = '/../images/user.png'
+                  user.image = '/../images/user.png'
                 }
                 else{
-                newUser.image = profile.photos[0].value;
+                user.image = profile.photos[0].value;
               }
                 user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                 user.save(function(err) {
@@ -130,10 +130,10 @@ function(token, refreshToken, profile, done) {
                       user.role = 'user';
                       user.provider = profile.provider;
                       if(profile.photos[0] == undefined){
-                        newUser.image = '/../images/user.png'
+                        user.image = '/../images/user.png'
                       }
                       else{
-                      newUser.image = profile.photos[0].value;
+                      user.image = profile.photos[0].value;
                     }
                       user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                       user.save(function(err) {
@@ -205,10 +205,10 @@ function(token, refreshToken, profile, done) {
                       user.role = 'user';
                     user.provider = profile.provider;
                     if(profile.photos[0] == undefined){
-                      newUser.image = '/../images/user.png'
+                      user.image = '/../images/user.png'
                     }
                     else{
-                    newUser.image = profile.photos[0].value;
+                    user.image = profile.photos[0].value;
                   }
                     user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                     user.save(function(err) {
@@ -275,10 +275,10 @@ function(token, refreshToken, profile, done) {
                          user.role = 'user';
                        user.provider = profile.provider;
                        if(profile.photos[0] == undefined){
-                         newUser.image = '/../images/user.png'
+                         user.image = '/../images/user.png'
                        }
                        else{
-                       newUser.image = profile.photos[0].value;
+                       user.image = profile.photos[0].value;
                      }
                        user.name  = profile.name.givenName + ' ' + profile.name.familyName;
                        user.save(function(err) {

@@ -125,7 +125,7 @@ label{
     <div class="w3-container w3-green w3-padding-16">
       <div class="w3-left"><i class="fa fa-exclamation w3-xxxlarge"></i></div>
       <div class="w3-right">
-        <h3>{{(users|filter: {role :'user'}).length}}</h3>
+        <h3>{{(users|filter: {role :'not-user'}).length}}</h3>
       </div>
       <div class="w3-clear"></div>
       <h4>Submission requests</h4>
@@ -140,8 +140,8 @@ label{
       <span class="w3-margin-right">Filter:</span>
       <button class="w3-btn" ng-click="filters.name=''">ALL</button>
       <button class="w3-btn w3-white" ng-click="filters.name='company'"><i class="fa fa-diamond w3-margin-right"></i>Company</button>
-      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='status'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
-      <button class="w3-btn w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Name</button>
+      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='join'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
+      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='status'"><i class="fa fa-map-pin w3-margin-right"></i>Role</button>
       <button class="w3-btn w3-right" style="position:absolute;right:20px" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-signs w3-margin-right"></i>add new user</button>
     </div>
   </header>
@@ -150,7 +150,7 @@ label{
 
   	<div ng-repeat="company_name in cat.list">
   	<legend class="text-muted text-center" style="color:black">{{company_name}}</legend>
-  		<div id="role" ng-repeat="user in users | filter: {role : company_name}" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
+  		<div id="role" ng-repeat="user in users | filter: {role : company_name}:true" class="col-md-4 animated bounceInUp" style="width:200px;height:200px" >
 
           <a class="thumbnail">
             <span class={{user.icon}} id={{$index}}t></span>
@@ -173,7 +173,7 @@ label{
 
 
 <!-- section 1 !-->
-    <legend class="text-muted text-center" style="color:black">Registered Users</legend>
+    <!-- <legend class="text-muted text-center" style="color:black">Registered Users</legend>
 <div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)" id="R">
       <div ng-repeat="user in users | filter: {role :'user'}:true" id={{user._id}} class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
@@ -184,7 +184,7 @@ label{
 
 </a>
 </div>
-</div>
+</div> -->
 <!-- the modal !-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -219,7 +219,7 @@ label{
     </div>
   </div>
 <!-- section 2 !-->
- <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
+ <!-- <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
  <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="UR">
        <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} style="width:200px; height:250px" class="col-md-4 UU" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
@@ -230,9 +230,9 @@ label{
 
  </a>
  </div>
-</div>
+</div> -->
 <!-- section 3 !-->
-<legend class="text-muted text-center" style="color:black">Administrator</legend>
+<!-- <legend class="text-muted text-center" style="color:black">Administrator</legend>
 <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="A">
       <div ng-repeat="user in users | filter: {role :'admin'}:true" id={{user._id}} class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
@@ -244,7 +244,7 @@ label{
 </a>
 </div>
 
-</div>
+</div> -->
 
 
 </div>
@@ -328,7 +328,8 @@ $scope.filter2 = {};
 $scope.filter_name = '';
 $scope.categories = [
   {name:'company', list: ['Amdocs', 'AT&T', 'Cricket']},
-  {name:'status', list: ['not-user', 'user', 'admin']}
+  {name:'status', list: ['not-user', 'user', 'admin']},
+  {name:'join', list: ['']}
 ];
 // functions for changing status
 user_factory.get_profile()
