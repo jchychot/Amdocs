@@ -106,5 +106,6 @@ module.exports = mongoose.model('rfc',{
   status: {
     type: String,
     default: 'pending'
-  }
+  },
+  company: String
 });

@@ -4,7 +4,20 @@
   var acc_role ='';
   var acc_url = '/../options.html';
   var acc_name = '';
+  function getRFC(res) {
+      rfc.find(function (err, rfcs) {
+
+          // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+          if (err) {
+              res.send(err);
+          }
+
+          res.json(rfcs); // return all todos in JSON format
+      });
+  }
+  ;
 module.exports = function(app, passport){
+
 // routes for rfc app
   app.get('/api/rfc', isLoggedIn,function(req,res){
     // use facebook email by default
@@ -44,6 +57,18 @@ module.exports = function(app, passport){
     });
 
   });
+// delete form
+  app.delete('/api/rfc/:_id',isLoggedIn, function(req,res){
+    rfc.remove({
+      _id : req.params._id
+    }, function(err, rfc){
+      if(err){
+        res.send(err);
+      }
+      getRFC(res);
+    });
+  });
+
 // get users
   app.get('/api/user', function(req,res){
       User.find(function(err,rfc){
@@ -63,9 +88,20 @@ module.exports = function(app, passport){
     });
 });
 // create user
-  app.post('/api/user', function(req,res){
+  app.post('/api/user', isLoggedIn, function(req,res){
     User.findOne({'email' : req.body.email}, function(err, user) {
           if (user) {
+
+              if(user.company== undefined){
+              user.company = req.body.company
+
+              user.role = req.body.role;
+            
+              user.save(function(err) {
+                  if (err)
+                      throw err;
+              });
+            }
               return;
             }
       else{
@@ -121,7 +157,8 @@ module.exports = function(app, passport){
           responsible_teams: req.body.rt,
           notify_teams: req.body.nt,
           status: req.body.status,
-          creation_date: req.body.time
+          creation_date: req.body.time,
+          company: req.user.company
       }, function(err, rfc){
           if(err)
             res.send(err);

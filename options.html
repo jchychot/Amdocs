@@ -122,7 +122,7 @@ input{
   <button type="button" class="btn btn-warning test" ng-click="mod_form()">
   <i class="fa fa-fw fa-pencil-square-o"></i>  Modify Existing Forms
   </button>
-  <button type="button" class="btn btn-danger test">
+  <button type="button" class="btn btn-danger test" ng-click="delete_form(ids)">
   <i class="fa fa-fw fa-times"></i>  Delete Forms
   </button>
 
@@ -227,8 +227,8 @@ angular.module('user_forms', [])
     get_form: function(){
         return $http.get('/options');
     },
-    delete_form: function(subject){
-      return $http.delete('/api/rfc',subject);
+    delete: function(id){
+      return $http.delete('/api/rfc/'+ id);
     },
     get_form_email: function(email){
       return $http.get('/api/rfc/' + email);
@@ -246,7 +246,6 @@ angular.module('user_control',[])
 .controller('user_controller', ['$scope', '$http', 'user_factory',function($scope, $http, user_factory){
 $scope.ids = null;
 $scope.user= {};
-
 user_factory.get_profile()
 .success(function(data){
   $scope.user = data;
@@ -255,9 +254,21 @@ user_factory.get_profile()
 
 });
 
+$scope.delete_form = function(id){
+  if(id != null)
+   user_factory.delete(id)
+   .success(function(data){
+     user_factory.get_form()
+     .success(function(data){
+       $scope.rfcs = data;
+
+     });
+   });
+};
 
 $scope.getId = function(id){
   $scope.ids = id;
+
 };
 $scope.log_out = function(){
 
@@ -288,7 +299,7 @@ user_factory.get_form()
 };
 
 $scope.mod_form = function() {
-
+  if($scope.ids!= null)
    window.top.location = "form.html"+ '?id='+ $scope.ids+'&mode=modify';
 
 };

@@ -46,7 +46,7 @@
         <div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-              <li class="1"><a>Change Overview</a></li>
+              <li class="1"><a href="#section1">Change Overview</a></li>
               <li class="2"><a href="#section2">System Impact</a></li>
               <li class="3"><a href="#section3">Related Impact</a></li>
             </ul>
@@ -325,16 +325,18 @@ function goBack() {
     window.history.back();
 }
 $( document ).ready(function() {
-
+// hash property returns the anchor part of the  attribute value
   $("a").on('click', function(event) {
+    if (this.hash !== "") {
     event.preventDefault();
+     var hash = this.hash;
     $('html, body').animate({
       scrollTop: $(hash).offset().top
     }, 800, function(){
- 
+
       window.location.hash = hash;
     });
-
+}
   });
 
   var mode = getParameterByName('mode');
