@@ -161,7 +161,7 @@ input{
                 </tr>
               </thead>
               <tbody>
-               <tr ng-repeat="rfc in rfcs | filter:search" class="list">
+               <tr ng-repeat="rfc in rfcs | filter: search" class="list">
                   <td><button ng-click="clone(rfc._id)"><i class="fa fa-fw fa-pencil"></i></button></td>
                   <td>{{rfc.subject}}</td>
                   <td>{{rfc.creation_date}}</td>

@@ -115,7 +115,7 @@ label{
     <div class="w3-container w3-orange w3-text-white w3-padding-16">
       <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
       <div class="w3-right">
-        <h3>50</h3>
+        <h3>{{new_user}}</h3>
       </div>
       <div class="w3-clear"></div>
       <h4>New Users</h4>
@@ -140,13 +140,13 @@ label{
       <span class="w3-margin-right">Filter:</span>
       <button class="w3-btn" ng-click="filters.name=''">ALL</button>
       <button class="w3-btn w3-white" ng-click="filters.name='company'"><i class="fa fa-diamond w3-margin-right"></i>Company</button>
-      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='join'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
+      <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name = 'join'"><i class="fa fa-photo w3-margin-right"></i>Recent</button>
       <button class="w3-btn w3-white w3-hide-small" ng-click="filters.name='status'"><i class="fa fa-map-pin w3-margin-right"></i>Role</button>
       <button class="w3-btn w3-right" style="position:absolute;right:20px" data-toggle="modal" data-target="#myModal"><i class="fa fa-map-signs w3-margin-right"></i>add new user</button>
     </div>
   </header>
 <!-- test !-->
-  <div ng-repeat="cat in categories | filter: filters">
+  <div ng-repeat="cat in categories | filter: filters | orderBy : join">
 
   	<div ng-repeat="company_name in cat.list">
   	<legend class="text-muted text-center" style="color:black">{{company_name}}</legend>
@@ -326,6 +326,7 @@ $scope.user = {};
 $scope.filters = {};
 $scope.filter2 = {};
 $scope.filter_name = '';
+$scope.date = new Date();
 $scope.categories = [
   {name:'company', list: ['Amdocs', 'AT&T', 'Cricket']},
   {name:'status', list: ['not-user', 'user', 'admin']},
@@ -372,6 +373,16 @@ $scope.toUReg = function(id){
 
 user_factory.get_user()
 .success(function(data){
+  $scope.new_user = 0;
+  console.log(data);
+  // get users that joined 5 days ago
+  for (var i = 0; i< data.length; i++){
+      console.log((Date.parse($scope.date)-Date.parse(data[i].join_date))/(1000*60*60*24));
+    if((Date.parse($scope.date)-Date.parse(data[i].join_date))/(1000*60*60*24) <= 5){
+      $scope.new_user++;
+
+    }
+  }
   $scope.users = data;
 for( var i = 0 ; i< $scope.users.length; i++ ){
   if($scope.users[i].provider == 'twitter'){
@@ -393,7 +404,7 @@ $scope.users[i].icon =   'fa fa-square-o';
 }
 });
 $scope.createUser = function(){
-
+$scope.user.join = new Date();
   if($scope.user.admin){
   $scope.user.role = 'admin';
 }

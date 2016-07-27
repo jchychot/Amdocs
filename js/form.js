@@ -57,7 +57,7 @@ var json = JSON.stringify($scope.request,null, 4);
       });
   };
   $scope.createRFC = function(id, mode){
-    
+
     if(mode == 'modify'){
       $scope.request.impact = $('input[name="optradio"]:checked').val();
       $scope.request.result = $('input[name="optradio1"]:checked').val();
@@ -67,6 +67,7 @@ var json = JSON.stringify($scope.request,null, 4);
       $scope.request.outage = $('input[name="optradio5"]:checked').val();
       $scope.request.test = $('input[name="optradio6"]:checked').val();
       $scope.request.SLA = $('input[name="optradio7"]:checked').val();
+      $scope.request.status = 'pending';
       var json = JSON.stringify($scope.request,null, 4);
           RFC_factory.modify_form(id, json)
           .success(function(data){

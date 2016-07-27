@@ -85,7 +85,7 @@ margin-top: 10px;
             <a id="username">--</a>
           </li>
           <li>
-            <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+            <a id="logoutBtn"  ng-click="log_out()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
     <li class="active">
       <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -97,11 +97,11 @@ margin-top: 10px;
 
 <div id="list">
   <div class="w3-row-padding w3-margin-bottom">
-  <div class="w3-quarter">
+  <div class="w3-quarter" ng-click="orders ='-creation_date'" >
     <div class="w3-container w3-red w3-padding-16">
       <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
       <div class="w3-right">
-        <h3>10</h3>
+        <h3>{{new_sub}}</h3>
       </div>
       <div class="w3-clear"></div>
       <h4>New Submissons</h4>
@@ -111,13 +111,15 @@ margin-top: 10px;
     <div class="w3-container w3-blue w3-padding-16">
       <div class="w3-left"><i class="fa fa-pencil-square-o w3-xxxlarge"></i></div>
       <div class="w3-right">
-        <h3>99</h3>
+        <h3>{{modi}}</h3>
       </div>
       <div class="w3-clear"></div>
       <h4>Modifications</h4>
     </div>
   </div>
+
 </div>
+  <p><input style="float:none" placeholder="Search" ng-model="search"/></p>
   <table class="table table-hover">
      <thead>
        <tr>
@@ -131,10 +133,10 @@ margin-top: 10px;
        </tr>
      </thead>
      <tbody>
-      <tr ng-repeat="rfc in rfcs">
+      <tr ng-repeat="rfc in rfcs | orderBy: orders | filter : search">
          <td>{{rfc.subject}}</td>
          <td>{{rfc.company}}</td>
-         <td>{{rfc.creation_date}}</td>
+         <td>{{rfc.creation_date | date: 'MM/dd/yyyy'}}</td>
          <td>{{rfc.name}}</td>
             <td>{{rfc.email}}</td>
             <td id="{{$index}}">{{rfc.status}}</td>
@@ -230,11 +232,11 @@ angular.module('admin_forms', [])
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
 var rfcs = {};
+
 $scope.date = new Date();
   admin_factory.get_profile()
   .success(function(data){
     $scope.user = data;
-
     document.getElementById('username').innerHTML = data.name;
     $('#pic').attr('src', data.image);
 
@@ -245,7 +247,13 @@ $scope.getList = function() {
 admin_factory.get_form()
 .success(function(data){
   $scope.rfcs = data;
+  $scope.new_sub = 0;
+  for (var i = 0; i< data.length; i++){
+    if((Date.parse($scope.date)-Date.parse(data[i].creation_date))/(1000*60*60*24) <= 1){
+      $scope.new_sub++;
 
+    }
+  }
 });
 };
 

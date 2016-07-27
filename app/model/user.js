@@ -9,8 +9,9 @@ var userSchema = mongoose.Schema({
         name         : String,
         role         : String,
         image        : String,
-        provider     : String, 
-        company      : String
+        provider     : String,
+        company      : String,
+        join_date    : Date
 });
 
 module.exports = mongoose.model('User', userSchema);

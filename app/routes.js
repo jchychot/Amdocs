@@ -91,17 +91,16 @@ module.exports = function(app, passport){
   app.post('/api/user', isLoggedIn, function(req,res){
     User.findOne({'email' : req.body.email}, function(err, user) {
           if (user) {
-
-              if(user.company== undefined){
-              user.company = req.body.company
-
+// caes 1  : self-come user
+              if(user.company== undefined || user.role != 'admin'){
+              user.company = req.body.company;
               user.role = req.body.role;
-            
               user.save(function(err) {
                   if (err)
                       throw err;
               });
             }
+// prevent changing roles
               return;
             }
       else{
@@ -109,7 +108,8 @@ module.exports = function(app, passport){
           name : req.body.name,
           email : req.body.email,
           role : req.body.role,
-          company : req.body.company
+          company : req.body.company,
+          join_date: req.body.join
       },function(err,user){
         if(err)
           res.send(err);
