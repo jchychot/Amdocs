@@ -1,5 +1,6 @@
   var rfc = require('./model/rfc');
   var User = require('./model/user');
+  var Feedback = require('./model/feedback');
   var acc_email ='';
   var acc_role ='';
   var acc_url = '/../options.html';
@@ -17,6 +18,7 @@
   }
   ;
 module.exports = function(app, passport){
+
 
 // routes for rfc app
   app.get('/api/rfc', isLoggedIn,function(req,res){
@@ -118,6 +120,28 @@ module.exports = function(app, passport){
   });
 
   });
+  // create user feedback
+    app.post('/api/feedback', isLoggedIn, function(req, res){
+        Feedback.create({
+          name: req.user.name,
+          email: req.user.email,
+          content: req.body.feedback
+        }, function(err,user){
+          if(err)
+            res.send(err);
+        });
+
+    });
+    //get user feedback
+    app.get('/api/feedback', function(req, res){
+      Feedback.find(function(err,feed){
+          if(err){
+            res.send(err);
+          }
+        res.json(feed);
+      });
+    });
+
 
   app.put('/api/user/:_id', function(req,res,next){
     User.findByIdAndUpdate(req.params._id, req.body, function (err, obj) {

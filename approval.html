@@ -64,8 +64,13 @@ margin-top: 10px;
       </div>
       <nav class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-    <li class="">
-      <a href="/feedback/"><span class="fa fa-fw fa-comment"></span> Feedback</a>
+    <li class="dropdown">
+      <a onclick="giveFeed()"><span class="fa fa-fw fa-comment"></span> Feedback</a>
+      <div class="dropdown-content" id="myDropdown">
+        <textarea ng-model="feedback" placeholder="we welcome your feedback"></textarea>
+        <button ng-click="giveBack()" class="btn btn-primary">Send</button>
+</div>
+
     </li>
     <li>
       <a target="gae-init-docs"> <i class="fa fa-fw fa-phone"></i> Contact</a>
@@ -200,6 +205,7 @@ $( document ).ready(function() {
   //document.getElementById("tick").style.display = "none";
 $('#tick').hide();
 $('#cross').hide();
+$('.dropdown-content').hide();
   var scope = angular.element(document.getElementById("admin")).scope();
     scope.$apply(function () {
     scope.getList();
@@ -207,6 +213,9 @@ $('#cross').hide();
 
  });
 
+ function giveFeed() {
+     document.getElementById("myDropdown").classList.toggle("show");
+ }
 
 </script>
 <script>
@@ -225,6 +234,9 @@ angular.module('admin_forms', [])
     },
     get_profile: function(){
         return $http.get('/user/profile');
+    },
+    send_feedback: function(){
+      return $http.post('/api/feedback');
     }
 
   }
@@ -234,7 +246,22 @@ angular.module('admin_forms', [])
 angular.module('admin_control',[])
 .controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
 var rfcs = {};
+var index = {} ;
+$scope.feedback = '';
 
+$scope.giveBack = function(){
+  admin_factory.send_feedback()
+  .success(function(){
+    $scope.feedback = '';
+    $('.dropdown-content').hide();
+  });
+};
+$scope.left = function(id){
+  $scope.index.id = id-1;
+};
+$scope.left = function(id){
+  $scope.index.id = id+1;
+};
 $scope.date = new Date();
   admin_factory.get_profile()
   .success(function(data){
