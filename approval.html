@@ -60,17 +60,16 @@ margin-top: 10px;
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-          <a class="navbar-brand" href="http://www.amdocs.com/pages/homepage.aspx"><i class="fa fa-home w3-margin-right"></i>Amdocs</a>
+          <a class="navbar-brand" href="options.html"><i class="fa fa-home w3-margin-right"></i>Amdocs</a>
       </div>
       <nav class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
     <li class="dropdown">
-      <a onclick="giveFeed()"><span class="fa fa-fw fa-comment"></span> Feedback</a>
-      <div class="dropdown-content" id="myDropdown">
-        <textarea ng-model="feedback" placeholder="we welcome your feedback"></textarea>
-        <button ng-click="giveBack()" class="btn btn-primary">Send</button>
-</div>
-
+      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-fw fa-comment"></span> Feedback</a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+</ul>
     </li>
     <li>
       <a target="gae-init-docs"> <i class="fa fa-fw fa-phone"></i> Contact</a>
@@ -151,8 +150,8 @@ margin-top: 10px;
 
   <button type="button" class="btn btn-secondary" ng-click="approve(rfc._id, $index)"><i class="fa fa-fw fa-check-square"></i></button>
   <button type="button" class="btn btn-secondary" ng-click="reject(rfc._id, $index)"><i class="fa fa-fw fa-times"></i></button>
-  <button type="button" class="btn btn-secondary" href="approval.html"><i class="fa fa-fw fa-refresh"></i></button>
-  <button type="button" class="btn btn-secondary"><i class="fa fa-fw fa-eye"></i></button>
+  <button type="button" class="btn btn-secondary" onclick="location.reload(true)"><i class="fa fa-fw fa-refresh"></i></button>
+  <button type="button" class="btn btn-secondary" ng-click="view(rfc._id)"><i class="fa fa-fw fa-eye"></i></button>
             </td>
 
        </tr>
@@ -214,7 +213,8 @@ $('.dropdown-content').hide();
  });
 
  function giveFeed() {
-     document.getElementById("myDropdown").classList.toggle("show");
+  //   document.getElementById("myDropdown").classList.toggle("show");
+$('.dropdown-content').show();
  }
 
 </script>
@@ -235,8 +235,11 @@ angular.module('admin_forms', [])
     get_profile: function(){
         return $http.get('/user/profile');
     },
-    send_feedback: function(){
-      return $http.post('/api/feedback');
+    send_feedback: function(data){
+      return $http.post('/api/feedback', data);
+    },
+    clone_form : function(id){
+      return $http.get('/api/rfc/'+ id);
     }
 
   }
@@ -244,22 +247,24 @@ angular.module('admin_forms', [])
 
 // controller
 angular.module('admin_control',[])
-.controller('admin_controller', ['$scope', '$http', 'admin_factory',function($scope, $http, admin_factory){
+.controller('admin_controller', ['$scope', '$http', 'admin_factory', function($scope, $http, admin_factory){
 var rfcs = {};
-var index = {} ;
-$scope.feedback = '';
+var feedback = {} ;
+$scope.feedback = {};
 
 $scope.giveBack = function(){
-  admin_factory.send_feedback()
-  .success(function(){
-    $scope.feedback = '';
-    $('.dropdown-content').hide();
+var json = JSON.stringify($scope.feedback,null, 4);
+document.getElementById('myDropdown').style.visibility = "hidden";
+  admin_factory.send_feedback(json)
+  .success(function(data){
+    $scope.feedback = {};
+    console.log('done');
   });
 };
 $scope.left = function(id){
   $scope.index.id = id-1;
 };
-$scope.left = function(id){
+$scope.right = function(id){
   $scope.index.id = id+1;
 };
 $scope.date = new Date();
@@ -270,6 +275,13 @@ $scope.date = new Date();
     $('#pic').attr('src', data.image);
 
   });
+  $scope.view = function(id){
+    admin_factory.clone_form(id)
+    .success(function(){
+        window.top.location = "form.html"+ '?id='+ id + '&mode=view';
+    });
+  };
+
 
 $scope.getList = function() {
 

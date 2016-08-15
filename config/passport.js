@@ -11,12 +11,15 @@ module.exports = function(passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
+
         done(null, user.id);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
+
         User.findById(id, function(err, user) {
+        
             done(err, user);
         });
     });
@@ -143,30 +146,9 @@ function(token, refreshToken, profile, done) {
                     }
                     return done(null, user);
                 } else {
-                    // if there is no user found with that facebook id, create them
-                    var newUser            = new User();
 
-                    // set all of the facebook information in our user model
-                    newUser.profile_id    = profile.id; // set the users facebook id
-                    newUser.token = token; // we will save the token that facebook provides to the user
-                    newUser.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
-                    newUser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-                    if(profile.photos[0] == undefined){
-                      newUser.image = '/../images/user.png'
-                    }
-                    else{
-                    newUser.image = profile.photos[0].value;
-                  }
-                    newUser.role = 'not-user';
-                    newUser.provider = profile.provider;
-                    // save our user to the database
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
+                    return done(null, false, {message: 'Sorry, you do not have access to this application. Please contact with the administrators'}) ;
 
-                        // if successful, return the new user
-                        return done(null, newUser);
-                    });
                 }
 
             });

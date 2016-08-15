@@ -223,7 +223,7 @@ app.get('/options', isLoggedIn, function(req, res) {
 app.get('/approval', isLoggedIn, function(req, res) {
 // use facebook email by default
 if(req.user.role == 'admin'){
-  console.log(req.user.role );
+
   rfc.find(function(err,rfc){
       if(err){
         res.send(err);
@@ -232,6 +232,7 @@ if(req.user.role == 'admin'){
   });
 }
 else {
+  alert('you are not an admin')
   res.send('you are not an admin!');
 }
 });
@@ -250,7 +251,8 @@ passport.authenticate('linkedin', {
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect : '/../options.html',
-        failureRedirect : '/'
+        failureRedirect : '/../error.html',
+        failureFlash: true
     }));
 app.get('/auth/google/callback',
           passport.authenticate('google', {

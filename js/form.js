@@ -136,7 +136,7 @@ var json = JSON.stringify($scope.request,null, 4);
   };
 
   $scope.getCC = function(id){
-
+var mode = getParameterByName('mode');
     RFC_factory.getCC(id)
     .then(function(obj){
 
@@ -202,6 +202,26 @@ $scope.request.mr = obj.data[0].event;
 $scope.request.descriptions= obj.data[0].descriptions;
 $scope.request.start_date = obj.data[0].start_date ;
 $scope.request.end_date = obj.data[0].end_date;
+if(mode == 'clone'){
+  toastr.info('New Submission','Status',{
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  });
+}
+else{ 
 if(obj.data[0].status === 'pending'){
   toastr.warning('Pending','Status',{
     "closeButton": false,
@@ -258,6 +278,7 @@ if(obj.data[0].status === 'rejected'){
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   });
+}
 }
     });
   };
