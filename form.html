@@ -58,7 +58,7 @@
                 <a id="username"></a>
               </li>
         <li class="active">
-          <a id="logoutBtn" onclick="logOut()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+          <a id="logoutBtn" href="/logout"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
             <li>
           <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -86,7 +86,7 @@
     <div>
     <div class="input-group">
      <label for="comment">Detailed Desciption of Change</label>
-     <textarea class="form-control" rows"3" id="comment" ng-model="request.descriptions"></textarea>
+     <textarea class="form-control" rows"3" ng-model="request.descriptions"></textarea>
    </div>
     </div>
 
@@ -192,9 +192,9 @@
     <div>
     <label for="comment">Detailed Implementation Plan (please attach):</label>
     </div>
-    <textarea class="form-control" rows"3" id="comment" ng-model="request.plan"></textarea>
+    <textarea class="form-control" rows"3" ng-model="request.plan"></textarea>
   <label for="comment">Detailed Back Out Plan (please attach):</label>
-  <textarea class="form-control" rows"3" id="comment" ng-model="request.plan2"></textarea>
+  <textarea class="form-control" rows"3" ng-model="request.plan2"></textarea>
   <div>
      <label for="sel1">Processes Impacted:?</label>
    </div>

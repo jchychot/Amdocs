@@ -99,7 +99,7 @@ label{
             <a id="username" ng-model="user.name">--</a>
           </li>
           <li>
-            <a id="logoutBtn" ng-click="log_out()"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
+            <a id="logoutBtn" href="/logout"><span class="fa fa-fw fa-sign-in"></span> Sign out</a>
           </li>
     <li class="active">
       <a id="loginBtn"><span class="fa fa-fw fa-sign-in"></span> Sign in</a>
@@ -171,21 +171,6 @@ label{
   </div>
 
 
-
-<!-- section 1 !-->
-    <!-- <legend class="text-muted text-center" style="color:black">Registered Users</legend>
-<div class="animated bounceInUp U" ondrop="drop(event)" ondragover="allowDrop(event)" id="R">
-      <div ng-repeat="user in users | filter: {role :'user'}:true" id={{user._id}} class="col-md-4" style="width:200px;height:200px" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
-
-        <a class="thumbnail">
-          <span class={{user.icon}} id={{$index}}t></span>
-         <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
-<p>{{user.name}}</p>
-
-</a>
-</div>
-</div> -->
-<!-- the modal !-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -218,33 +203,7 @@ label{
       </div>
     </div>
   </div>
-<!-- section 2 !-->
- <!-- <legend class="text-muted text-center" style="color:black">Unregistered Users</legend>
- <div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="UR">
-       <div ng-repeat="user in users | filter: {role :'not-user'}:true" id={{user._id}} style="width:200px; height:250px" class="col-md-4 UU" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
 
-         <a class="thumbnail">
-           <span class={{user.icon}} id={{$index}}t></span>
-          <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
- <p>{{user.name}}</p>
-
- </a>
- </div>
-</div> -->
-<!-- section 3 !-->
-<!-- <legend class="text-muted text-center" style="color:black">Administrator</legend>
-<div class="animated bounceInUp" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:auto; height:auto" id="A">
-      <div ng-repeat="user in users | filter: {role :'admin'}:true" id={{user._id}} class="col-md-4 A" style="width:200px; height:250px" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)" ondragend="end_drag(event)">
-
-        <a class="thumbnail">
-          <span class={{user.icon}} id={{$index}}t></span>
-         <img class="loader" ng-src="{{user.image}}" style="width:150px;height:150px" />
-<p>{{user.name}}</p>
-
-</a>
-</div>
-
-</div> -->
 
 
 </div>

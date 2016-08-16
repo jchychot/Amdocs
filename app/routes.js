@@ -272,7 +272,7 @@ app.get('/auth/twitter/callback',
 app.get('/logout', function(req, res) {
 
 req.logout();
-  res.redirect('/'); //Inside a callback… bulletproof!
+  res.redirect('/../login.html'); //Inside a callback… bulletproof!
 
     // req.logout();
     //   res.redirect('/../login.html');

@@ -137,7 +137,7 @@ input{
      <tbody>
       <tr ng-repeat="rfc in rfcs" ng-class="{selected : rfc._id === ids }">
          <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.subject}}</td>
-         <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.creation_date}}</td>
+         <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.creation_date| date: 'MM/dd/yyyy'}}</td>
          <td ng-dblclick="view(rfc._id)" ng-click="getId(rfc._id)">{{rfc.status}}</td>
        </tr>
      </tbody>
